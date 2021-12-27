@@ -1,3 +1,80 @@
+* { padding: 0; margin: 0;}
+
 body {
-    /*background-color: lightblue;*/
+    background-color: rgb(245, 245, 245);
+}
+
+.home-layout {
+    display: grid;
+    grid-gap: 2vw;
+    grid-column: column;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "nav     nav nav nav"
+                         "groups  map map post"
+                         "friends map map activity";
+}
+
+nav {
+    grid-area: nav;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    height: 3.5vh;
+}
+
+.nav-options li {
+    display: inline-block;
+    padding: 0 10px;
+    list-style: none;
+}
+
+.groups {
+    grid-area: groups;
+    border: solid 1px;
+    margin-left: 1vw;
+}
+
+.friends {
+    grid-area: friends;
+    border: solid 1px;
+    margin-left: 1vw;
+}
+
+.map {
+    grid-area: map;
+    height: 80vh;
+    width: 60vw;
+    border: solid 1px;
+}
+
+.post {
+    grid-area: post;
+    border: solid 1px;
+    margin-right: 1vw;
+}
+
+.activity {
+    grid-area: activity;
+    border: solid 1px;
+    margin-right: 1vw;
+}
+
+.logo-and-name {
+    margin-right: 100px;
+}
+
+.nav-options {
+}
+
+.gd-content {
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.mr-10 {
+    margin-right: 10px;
 }

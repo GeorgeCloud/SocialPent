@@ -4,8 +4,24 @@
   <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
 {% endblock %}
 
-{% block title %}{% endblock %}
+{% block title %} Home {% endblock %}
 
 {% block body %}
+  <div class="home-layout">
+    {% include 'partials/nav.html' %}
 
+    <div class="groups gd-content">groups</div>
+
+    <div class="friends gd-content">friends</div>
+
+    <div class="map gd-content">map</div>
+
+    <div class="post gd-content">post</div>
+
+    <div class="activity gd-content">activity</div>
+  </div>
+
+
+
+  <footer></footer>
 {% endblock %}
