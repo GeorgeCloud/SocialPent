@@ -1,0 +1,25 @@
+{% extends 'partials/authentication.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+  <h1 class="grey-text med-text">START FOR FREE</h1>
+
+  <h2 class="create-account-banner xlg-text">Create new account.</h2>
+  <h3 class="already-a-member-text sml-text">
+    Already A Member?
+    <a href="/login">Log in</a>
+  </h3>
+
+  <form action="/users/create" method="POST" class="account-form">
+    <div class="side-by-side half-input-field">
+      <input type="text" class="half-input-field first-name-field" name="username"  placeholder="Username">
+      <input type="text" class="half-input-field" name="name" placeholder="Full Name">
+    </div>
+
+    <input type="email" class="full-input-field" name="email" placeholder="Email">
+    <input type="password" class="full-input-field" name="password" placeholder="Password">
+
+    <input type="submit" class="mini-input-field" value="Create account">
+  </form>
+{% endblock %}

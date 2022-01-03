@@ -1,0 +1,189 @@
+* { padding: 0; margin: 0;}
+
+ul {
+}
+
+body {
+    background-color: rgb(245, 245, 245);
+}
+
+.home-layout {
+    display: grid;
+    grid-gap: 2vw;
+    grid-column: column;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "nav     nav nav nav"
+                         "groups  map map post"
+                         "friends map map activity";
+}
+
+nav {
+    grid-area: nav;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    height: 3.5vh;
+}
+
+.nav-options li {
+    display: inline-block;
+    padding: 0 10px;
+    list-style: none;
+}
+
+.groups {
+    grid-area: groups;
+    border: solid 1px;
+    margin-left: 1vw;
+}
+
+.friends {
+    grid-area: friends;
+    border: solid 1px;
+    margin-left: 1vw;
+}
+
+.map {
+    grid-area: map;
+    height: 80vh;
+    width: 60vw;
+    border: solid 1px;
+
+    background-image: url("/static/images/map.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.post {
+    grid-area: post;
+    border: solid 1px;
+    margin-right: 1vw;
+}
+
+.activity {
+    grid-area: activity;
+    border: solid 1px;
+    margin-right: 1vw;
+}
+
+.logo-and-name {
+    display: flex;
+    flex-direction: row;
+    margin-right: 100px;
+
+}
+
+.sml-text {
+    font-size: 15px;
+}
+
+.med-text {
+    font-size: 20px;
+}
+
+.lg-text {
+    font-size: 25px;
+}
+
+.xlg-text {
+    font-size: 50px;
+}
+
+.nav-options {
+}
+
+.gd-content {
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}
+
+.logo-and-name img {
+    height: 30px;
+    width: 30px;
+}
+
+.left-content {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    /*background-color: lightblue;*/
+    /* site height - nav height */
+    height: calc(100vh - 20vh - 3.5vh - 20px);
+    width: 50vw;
+    padding-top: 20vh;
+    padding-left: 50px;
+}
+
+.create-account-banner {
+
+}
+
+.create-account-text {
+    color: grey;
+}
+
+.lightgrey-text {
+    color: lightgrey;
+}
+
+.already-a-member-text {
+
+}
+
+.side-by-side {
+    display: flex;
+    flex-direction: row;
+}
+
+.account-form {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+}
+
+.account-form input {
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.first-name-field {
+    margin-right: 10px;
+}
+
+.half-input-field {
+    width: 100%;
+}
+
+.full-input-field {
+    /*width: 70%;*/
+}
+
+.mini-input-field {
+    /* field size - margin-right */
+    width: calc(50% - 10px);
+    align-self: flex-end;
+}
+
+.background {
+    background-image: url("images/cover3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.blur {
+    /*background: rgba(255, 255, 255, 0.2);*/
+    backdrop-filter: blur(2px);
+    width: 100%;
+    height: 100%;
+}
