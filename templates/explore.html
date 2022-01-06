@@ -1,23 +1,40 @@
 {% extends 'partials/_base.html' %}
 
-{% block header %}
-
-{% endblock %}
-
 {% block title %} Explore {% endblock %}
 
 {% block body %}
   <div class="home-layout">
     {% include 'partials/nav.html' %}
 
-    <div class="groups gd-content">groups</div>
+    <div class="groups gd-content"><h5>Groups</h5></div>
 
-    <div class="friends gd-content">friends</div>
+    <div class="friends gd-content"><h5>Friends</h5></div>
 
-    <div class="map gd-content">map</div>
+    <div class="map gd-content"><h5>Map</h5></div>
 
-    <div class="post gd-content">post</div>
+    <div class="post gd-content">
+      <h5>Post</h5>
 
-    <div class="activity gd-content">activity</div>
+      <div class="side-by-side center">
+        <div>
+          <img class="profile-image-explore" src="{{ url_for('static', filename='/images/cover2.jpg') }}" alt="Dark Road">
+        </div>
+
+        <div>
+          <a class="username-link" href="/kiirb">Kiirb</a>
+          <p>Software Developer</p>
+        </div>
+      </div>
+
+      <form action="/post" method="POST" class="center">
+          <label for="message"></label>
+          <textarea name="message" placeholder="What are you thinking about?" cols="30" rows="5" autofocus></textarea>
+        <br>
+
+        <input type="submit" class="submit-message">
+      </form>
+    </div>
+
+    <div class="activity gd-content"><h5>Activity</h5></div>
   </div>
 {% endblock %}

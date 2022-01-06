@@ -1,10 +1,24 @@
 {% extends 'partials/_base.html' %}
 
-{% block title %}{{% user.username %}}'s profile{% endblock %}
+{% include 'partials/nav.html' %}
+
+{% block title %}
+  {{ user['username'] }}
+{% endblock %}
 
 {% block body %}
   {% if user %}
-    <h1>User exists</h1>
+    <h1>User: {{ user['username'] }}</h1>
+    <ul>
+      <li>posts: 0</li>
+      <li>followers: 0</li>
+      <li>following: 0</li>
+    </ul>
+    {% for post in posts %}
+      <h5>{{post['message']}}</h5>
+      <br>
+      <hr>
+    {% endfor %}
   {% else %}
     <h1>User does not exist</h1>
   {% endif %}

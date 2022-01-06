@@ -7,14 +7,9 @@ body {
     background-color: rgb(245, 245, 245);
 }
 
-.home-layout {
-    display: grid;
-    grid-gap: 2vw;
-    grid-column: column;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas: "nav     nav nav nav"
-                         "groups  map map post"
-                         "friends map map activity";
+textarea {
+    resize: none;
+    padding: 5px;
 }
 
 nav {
@@ -23,32 +18,54 @@ nav {
     background-color: rgb(255, 255, 255);
     padding: 10px;
     height: 3.5vh;
+    width: 98.8vw;
+}
+
+.nav-options {
+    width: 100%;
+    text-align: right;
+    margin-right: 50px;
 }
 
 .nav-options li {
     display: inline-block;
+    color: red;
     padding: 0 10px;
     list-style: none;
+    margin-top: 2.5px;
+    font-size: 20px;
+}
+
+
+.home-layout {
+    display: grid;
+    grid-gap: 3vh;
+    grid-column: column;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "nav     nav nav nav"
+                         "groups  map map post"
+                         "friends map map activity";
+    margin-bottom: 3vh;
 }
 
 .groups {
     grid-area: groups;
     border: solid 1px;
     margin-left: 1vw;
+    height: 37vh;
 }
 
 .friends {
     grid-area: friends;
     border: solid 1px;
     margin-left: 1vw;
+    height: 37vh;
 }
 
 .map {
     grid-area: map;
     height: 80vh;
-    width: 60vw;
     border: solid 1px;
-
     background-image: url("/static/images/map.png");
     background-size: cover;
     background-position: center;
@@ -58,19 +75,46 @@ nav {
     grid-area: post;
     border: solid 1px;
     margin-right: 1vw;
+    height: 37vh;
 }
 
 .activity {
     grid-area: activity;
     border: solid 1px;
     margin-right: 1vw;
+    height: 37vh;
 }
 
-.logo-and-name {
+.profile-image-explore {
+    height: 100px;
+    width: 80px;
+}
+
+
+a:link {
+  color: black;
+  background-color: transparent;
+}
+
+.nav-options a:visited  {
+    color: black;
+    text-decoration: none;
+}
+
+.nav-options a:hover {
+    color: white;
+    background-color: black;
+    padding: 10px;
+    text-decoration: underline;
+}
+
+
+.logo-and-name a {
     display: flex;
     flex-direction: row;
     margin-right: 100px;
-
+    text-decoration: none;
+    margin-left: 15%;
 }
 
 .sml-text {
@@ -87,9 +131,6 @@ nav {
 
 .xlg-text {
     font-size: 50px;
-}
-
-.nav-options {
 }
 
 .gd-content {
@@ -122,8 +163,25 @@ nav {
     padding-left: 50px;
 }
 
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.submit-message {
+    padding: 10px 50px;
+    margin-left: auto;
+}
+
 .create-account-banner {
 
+}
+
+.username-link {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .create-account-text {
@@ -141,6 +199,8 @@ nav {
 .side-by-side {
     display: flex;
     flex-direction: row;
+    width: 100%;
+
 }
 
 .account-form {

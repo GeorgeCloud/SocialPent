@@ -9,10 +9,10 @@
     <a href="/signup">Signup</a>
   </h3>
 
-  <form class="account-form" action="/login">
-    <input type="text" class="full-input-field" placeholder="Username">
-    <input type="password" class="full-input-field" placeholder="Password">
+  <form action="/authenticate" class="account-form"  method="POST">
+    <input type="text" class="full-input-field" name="username" placeholder="Username">
+    <input type="password" class="full-input-field" name="password" placeholder="Password">
 
-    <input type="button" class="mini-input-field" value="Create account">
+    <input type="submit" class="mini-input-field" value="Login">
   </form>
 {% endblock %}

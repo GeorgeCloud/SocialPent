@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -8,9 +10,14 @@ client = MongoClient(uri)
 db = client.get_default_database()
 
 users = db.users
+posts = db.posts
 
 @app.route('/', methods=['GET'])
 def explore():
+    # Fetch user posts, friends posts, active friends, users groups
+
+    # Fetch Google API
+
     return render_template('explore.html')
 
 @app.route('/signup', methods=['GET'])
@@ -24,21 +31,79 @@ def submit_user():
         'name': request.form['name'].title(),
         'email': request.form['email'],
         'password': request.form['password'],
+        'friends': [],
+        'friend_requests_received': [],
+        'friend_requests_sent': []
     }
+    users.insert_one(user)
 
-    username = users.insert_one(user).inserted_id
-
-    return render_template(url_for('view_profile'), username=username)
-
-@app.route('/users/<username>', methods=['GET'])
-def view_profile(username):
-    user = users.find({'username': username})
-
-    return render_template('view_profile.html', user=user)
+    return redirect(url_for('view_profile', username=user['username']))
 
 @app.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
+
+@app.route('/authenticate', methods=['POST'])
+def authenticate():
+    username = request.form['username']
+    password = request.form['password']
+
+    user = users.find_one({'username': username})
+
+    if user and user['password'] == password:
+        print('signed in')
+        return redirect(url_for('view_profile', username=username))
+    else:
+        # Flash Message: Incorrect Password
+        print('password is incorrect')
+        return redirect(url_for('login'))
+
+@app.route('/<username>', methods=['GET'])
+def view_profile(username):
+    user = users.find_one({'username': username})
+
+    user_posts = posts.find({'user_id': user['_id']})
+
+    return render_template('view_profile.html', user=user, posts=user_posts)
+
+@app.route('/post', methods=['POST'])
+def submit_post():
+    # Get coordinates of users location
+
+    # current_user
+    user = users.find_one({'username': 'kiirb'})
+
+    post = {
+        'user_id': user['_id'],
+        'message': request.form['message'],
+        'created_on': datetime.now(),
+    }
+
+    posts.insert_one(post)
+
+    return redirect(url_for('view_profile', username=user['username']))
+
+
+def add_friend(username):
+    # current_user
+    current_user = users.find_one({'username': 'kiirb'})
+
+    user = users.find_one({'username': username})
+
+    if user:
+        # Keep track of friend requests sent to users
+        users.find_one_and_update(
+            {'username': current_user['username']},
+            {'$addToSet': {'friend_request_sent': user['_id']}}
+        )
+
+        # Friend receives request
+        users.find_one_and_update(
+            {'username': username},
+            {'$addToSet': {'friend_request_received': current_user['_id']}}
+        )
+    else:
+        print('Could not find friend with that username')
 
 
 if __name__ == '__main__':

@@ -1,11 +1,15 @@
 <nav>
   <div class="logo-and-name">
-    <img src="{{url_for('static', filename='images/reveal.png')}}" alt="logo">
-    <h1>Reveal</h1>
+    <a href="/">
+      <img src="{{url_for('static', filename='images/reveal.png')}}" alt="logo">
+      <h1>Reveal</h1>
+    </a>
   </div>
 
   <ul class="nav-options">
-    <li><a href="/explore">Explore</a></li>
-    <li><a href="/login">Login</a></li>
+    <li><a href="/">Explore</a></li>
+
+    <!--  Only show if logged out  -->
+    <li><a class="hover-effect" href="/login">Login</a></li>
   </ul>
 </nav>
