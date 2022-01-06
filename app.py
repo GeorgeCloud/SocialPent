@@ -12,13 +12,18 @@ db = client.get_default_database()
 users = db.users
 posts = db.posts
 
+current_user = users.find_one({'username': 'fish'})
+
 @app.route('/', methods=['GET'])
 def explore():
-    # Fetch user posts, friends posts, active friends, users groups
+    # Active Friends
+    # Consider only fetching certain data; instead of whole object
+    friends = users.find({'_id': {'$in': [ObjectId("61d64a1e141a579f883def9a")]}})
+    # Fetch user posts, friends posts, users groups
 
     # Fetch Google API
 
-    return render_template('explore.html')
+    return render_template('explore.html', friends=friends)
 
 @app.route('/signup', methods=['GET'])
 def new_user():
@@ -86,7 +91,7 @@ def submit_post():
 
 def add_friend(username):
     # current_user
-    current_user = users.find_one({'username': 'kiirb'})
+    # current_user = users.find_one({'username': 'kiirb'})
 
     user = users.find_one({'username': username})
 

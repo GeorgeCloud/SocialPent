@@ -8,7 +8,19 @@
 
     <div class="groups gd-content"><h5>Groups</h5></div>
 
-    <div class="friends gd-content"><h5>Friends</h5></div>
+    <div class="friends gd-content">
+      <h5>Friends</h5>
+
+      {% for friend in friends %}
+        <div class="friend-container">
+          <img class="friend-profile-image" src="{{ url_for('static', filename='/images/profile_image.png') }}" alt="Friend Profile Picture">
+
+          <a href="/{{friend['username']}}">{{ friend['username'].capitalize() }}</a>
+
+          <img class="online-status" src="{{ url_for('static', filename='/images/green.png') }}" alt="">
+        </div>
+      {% endfor %}
+    </div>
 
     <div class="map gd-content"><h5>Map</h5></div>
 

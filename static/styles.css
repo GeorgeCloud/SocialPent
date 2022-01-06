@@ -62,6 +62,25 @@ nav {
     height: 37vh;
 }
 
+.friend-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    border: solid black 1px
+}
+
+.friend-profile-image {
+    height: 50px;
+    width: 40px;
+}
+
+.online-status {
+    height: 15px;
+    width: 15px;
+    margin-left: 10vw;
+}
+
 .map {
     grid-area: map;
     height: 80vh;
