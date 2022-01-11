@@ -3,6 +3,14 @@
 ul {
 }
 
+.user-stats {
+    border: solid black 1px;
+}
+
+.username-search {
+    margin-right: 5px;
+}
+
 body {
     background-color: rgb(245, 245, 245);
 }
@@ -36,6 +44,10 @@ nav {
     font-size: 20px;
 }
 
+.not-found-404 {
+    height: 100vh;
+    width: 100vw;
+}
 
 .home-layout {
     display: grid;
@@ -188,6 +200,13 @@ a:link {
     justify-content: center;
 }
 
+.centered {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .submit-message {
     padding: 10px 50px;
     margin-left: auto;
@@ -260,9 +279,27 @@ a:link {
     width: 100%;
 }
 
+.button-add-friend {
+    padding: 3px;
+}
+
 .blur {
     /*background: rgba(255, 255, 255, 0.2);*/
     backdrop-filter: blur(2px);
     width: 100%;
     height: 100%;
+}
+
+.sent-section {
+    height: 100vh;
+    width: 50vw;
+    padding: 50px;
+    background-color: lightblue;
+}
+
+.received-section {
+    height: 100vh;
+    width: 50vw;
+    padding: 50px;
+    background-color: rgb(255, 205, 61);
 }

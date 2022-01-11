@@ -6,10 +6,24 @@
     </a>
   </div>
 
+  <form id="user-search" class="side-by-side">
+    <input id="username" type="text" class="username-search" placeholder="Username">
+    <input type="submit" name="username" value="Search">
+  </form>
+
   <ul class="nav-options">
     <li><a href="/">Explore</a></li>
-
-    <!--  Only show if logged out  -->
+    <li><a href="/friends/requests">Requests</a></li>
     <li><a class="hover-effect" href="/login">Login</a></li>
   </ul>
 </nav>
+
+<script>
+  const userform = document.getElementById('user-search');
+
+  userform.addEventListener('submit', async (e)=> {
+      e.preventDefault();
+      const user = document.getElementById('username').value
+      window.location.href = `/${user}`
+  })
+</script>

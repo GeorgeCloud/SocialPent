@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, send_file
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime
@@ -12,13 +12,13 @@ db = client.get_default_database()
 users = db.users
 posts = db.posts
 
-current_user = users.find_one({'username': 'fish'})
+current_user = users.find_one({'username': 'kiirb'})
 
 @app.route('/', methods=['GET'])
 def explore():
     # Active Friends
-    # Consider only fetching certain data; instead of whole object
-    friends = users.find({'_id': {'$in': [ObjectId("61d64a1e141a579f883def9a")]}})
+    # Consider only fetching certain data(username, status); instead of entire object
+    friends = users.find({'_id': {'$in': current_user['friends']}})
     # Fetch user posts, friends posts, users groups
 
     # Fetch Google API
@@ -63,13 +63,11 @@ def authenticate():
         print('password is incorrect')
         return redirect(url_for('login'))
 
-@app.route('/<username>', methods=['GET'])
-def view_profile(username):
-    user = users.find_one({'username': username})
-
-    user_posts = posts.find({'user_id': user['_id']})
-
-    return render_template('view_profile.html', user=user, posts=user_posts)
+# @app.route('/friends', methods=['GET'])
+# def get_friends():
+#     return loads(users.find(
+#         {'_id': {'$in': [current_user['_id']]}}
+#     ))
 
 @app.route('/post', methods=['POST'])
 def submit_post():
@@ -88,30 +86,44 @@ def submit_post():
 
     return redirect(url_for('view_profile', username=user['username']))
 
-
-def add_friend(username):
-    # current_user
-    # current_user = users.find_one({'username': 'kiirb'})
-
+@app.route('/<username>', methods=['GET'])
+def view_profile(username):
     user = users.find_one({'username': username})
 
     if user:
-        # Keep track of friend requests sent to users
-        users.find_one_and_update(
-            {'username': current_user['username']},
-            {'$addToSet': {'friend_request_sent': user['_id']}}
+        user_posts = posts.find({'user_id': user['_id']})
+        return render_template('view_profile.html', user=user, posts=user_posts)
+    else:
+        return render_template('404.html', error_message=f'{username.capitalize()} Not Found')
+
+@app.route('/friends/send', methods=['POST'])
+def create_friend_request():
+    user = users.find_one({'username': request.form['username']})
+
+    if user:
+        # print('user:', current_user['_id'])
+        users.update_one(
+            {'_id': current_user['_id']},
+            {"$addToSet": {'friend_requests_sent': user['_id']}}
         )
 
-        # Friend receives request
-        users.find_one_and_update(
-            {'username': username},
-            {'$addToSet': {'friend_request_received': current_user['_id']}}
+        users.update_one(
+            {'_id': user['_id']},
+            {"$addToSet": {'friend_requests_received': current_user['_id']}}
         )
+
+        return redirect(url_for('view_profile', username=user['username']))
     else:
-        print('Could not find friend with that username')
+        return 'User Does Not Exist'
+
+@app.route('/friends/requests', methods=['GET'])
+def view_friend_requests():
+    sent = users.find({'_id': {'$in': current_user['friend_requests_sent']}})
+    received = users.find({'_id': {'$in': current_user['friend_requests_received']}})
+
+    return render_template('friend_requests.html', requests_sent=sent, requests_received=received)
+
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

@@ -1,0 +1,27 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Friend Requests {% endblock %}
+
+{% block body %}
+  <div class="side-by-side">
+    <div class="sent-section">
+      <h2>Friend Requests Sent</h2>
+      {% for user in requests_sent %}
+        <div style="display: flex; flex-direction: row;">
+          <p>{{ user['username'] }} | 2 days ago</p>
+          <button>Cancel</button>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="received-section">
+      <h2>Friend Requests Received</h2>
+      {% for user in requests_sent %}
+      <div>
+        {{ user['username'] }} | sent 2 days ago
+        <button>Accept</button>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

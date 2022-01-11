@@ -11,7 +11,10 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+  {% include 'partials/nav.html' %}
+
   {% block body %}
+
   {% endblock %}
 
   <footer></footer>

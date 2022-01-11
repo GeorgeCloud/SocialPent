@@ -1,0 +1,11 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}404{% endblock %}
+
+{% block body %}
+  <div class="centered">
+    <h1>{{ error_message }}</h1>
+    <a href="/"><p>return back</p></a>
+  </div>
+  <img class="not-found-404" src="{{ url_for('static', filename='images/404_image.jpg') }}" alt="404 Image">
+{% endblock %}

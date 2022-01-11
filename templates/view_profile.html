@@ -1,7 +1,5 @@
 {% extends 'partials/_base.html' %}
 
-{% include 'partials/nav.html' %}
-
 {% block title %}
   {{ user['username'] }}
 {% endblock %}
@@ -9,11 +7,18 @@
 {% block body %}
   {% if user %}
     <h1>User: {{ user['username'] }}</h1>
-    <ul>
+    <ul class="user-stats">
       <li>posts: 0</li>
       <li>followers: 0</li>
       <li>following: 0</li>
     </ul>
+
+    <form action="/friends/send" method="POST">
+      <input type="hidden" name="username" value="{{ user['username'] }}">
+      <input type="submit" class="button-add-friend" value="Add Friend">
+    </form>
+
+
     {% for post in posts %}
       <h5>{{post['message']}}</h5>
       <br>
