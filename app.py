@@ -38,8 +38,6 @@ def submit_user():
         'email': request.form['email'],
         'password': request.form['password'],
         'friends': [],
-        'friend_requests_received': [],
-        'friend_requests_sent': []
     }
     users.insert_one(user)
 
@@ -97,7 +95,7 @@ def view_profile(username):
     else:
         return render_template('404.html', error_message=f'{username.capitalize()} Not Found')
 
-@app.route('/friends/send', methods=['POST'])
+@app.route('/friends/add', methods=['POST'])
 def create_friend_request():
     # TODO: Handle accepting friend request before sending one.
     user = users.find_one({'username': request.form['username']})
@@ -119,10 +117,24 @@ def create_friend_request():
 
 @app.route('/friends/requests', methods=['GET'])
 def view_friend_requests():
-    sent = users.find({'_id': {'$in': current_user['friend_requests_sent']}})
-    received = users.find({'_id': {'$in': current_user['friend_requests_received']}})
+    import pdb; pdb.set_trace()
+    sent = friend_requests.find({'sender': current_user['_id']})
 
-    return render_template('friend_requests.html', requests_sent=sent, requests_received=received)
+    # received = friend_requests.find({'receiver': current_user['_id']})
+
+    requests = {
+
+    }
+
+    return render_template('friend_requests.html', requests_sent=sent)  # requests_received=received
+
+@app.route('/friends/requests/accept', methods=['POST'])
+def accept_friend_request():
+    pass
+
+@app.route('/friends/requests/delete', methods=['POST'])
+def delete_friend_request():
+    pass
 
 
 if __name__ == '__main__':

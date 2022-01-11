@@ -6,22 +6,15 @@
   <div class="side-by-side">
     <div class="sent-section">
       <h2>Friend Requests Sent</h2>
-      {% for user in requests_sent %}
-        <div style="display: flex; flex-direction: row;">
-          <p>{{ user['username'] }} | 2 days ago</p>
-          <button>Cancel</button>
-        </div>
+      {% for request in requests_sent %}
+        <form action="/friends/request/accept" method="POST">
+          <div style="display: flex; flex-direction: row;">
+            <p>{{ request['receiver'] }} | 2 days ago</p>
+            <input type="submit">
+          </div>
+        </form>
       {% endfor %}
     </div>
 
-    <div class="received-section">
-      <h2>Friend Requests Received</h2>
-      {% for user in requests_sent %}
-      <div>
-        {{ user['username'] }} | sent 2 days ago
-        <button>Accept</button>
-      </div>
-      {% endfor %}
-    </div>
   </div>
 {% endblock %}
