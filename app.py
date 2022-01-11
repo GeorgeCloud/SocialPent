@@ -11,6 +11,7 @@ db = client.get_default_database()
 
 users = db.users
 posts = db.posts
+friend_requests = db.friendRequests
 
 current_user = users.find_one({'username': 'kiirb'})
 
@@ -98,19 +99,19 @@ def view_profile(username):
 
 @app.route('/friends/send', methods=['POST'])
 def create_friend_request():
+    # TODO: Handle accepting friend request before sending one.
     user = users.find_one({'username': request.form['username']})
 
     if user:
-        # print('user:', current_user['_id'])
-        users.update_one(
-            {'_id': current_user['_id']},
-            {"$addToSet": {'friend_requests_sent': user['_id']}}
-        )
+        key = { 'sender': current_user['_id'], 'receiver': user['_id'] }
 
-        users.update_one(
-            {'_id': user['_id']},
-            {"$addToSet": {'friend_requests_received': current_user['_id']}}
-        )
+        data = {"$set": {
+            'sender': current_user['_id'],
+            'receiver': user['_id'],
+            'created_on': datetime.now()
+        }}
+
+        friend_requests.update_one(key, data, upsert=True)
 
         return redirect(url_for('view_profile', username=user['username']))
     else:
@@ -122,7 +123,6 @@ def view_friend_requests():
     received = users.find({'_id': {'$in': current_user['friend_requests_received']}})
 
     return render_template('friend_requests.html', requests_sent=sent, requests_received=received)
-
 
 
 if __name__ == '__main__':
