@@ -117,24 +117,33 @@ def create_friend_request():
 
 @app.route('/friends/requests', methods=['GET'])
 def view_friend_requests():
-    import pdb; pdb.set_trace()
-    sent = friend_requests.find({'sender': current_user['_id']})
+    requests_sent = friend_requests.find({'sender': current_user['_id']})
+    # requests_received = friend_requests.find({'sender': current_user['_id']})
 
-    # received = friend_requests.find({'receiver': current_user['_id']})
-
-    requests = {
-
-    }
+    sent = [(users.find_one({'_id': r['receiver']})['username'], (datetime.now() - r['created_on']).days) for r in requests_sent]
+    # received = [(r['created_on'], users.find_one({'_id': r['receiver']})['username']) for r in requests_received]
 
     return render_template('friend_requests.html', requests_sent=sent)  # requests_received=received
 
 @app.route('/friends/requests/accept', methods=['POST'])
 def accept_friend_request():
-    pass
+    user = users.find_one({'_id': request.form['user_id']})
+
+    friend_request = friend_requests.find_one({'sender': current_user['_id'], 'receiver': user['user_id']})
+
+    if friend_request:
+        friend_requests.delete_one(friend_request)
+
+        current_user.insert_one( { '$addToSet': {'friends': user['_id'] } })
+        current_user.insert_one({'$addToSet': {'friends': current_user['_id']}})
 
 @app.route('/friends/requests/delete', methods=['POST'])
 def delete_friend_request():
-    pass
+    user = users.find_one({'username': request.form['username']})
+
+    friend_requests.delete_one({'sender': current_user['_id'], 'receiver': user['_id']})
+
+    return redirect(url_for('view_friend_requests'))
 
 
 if __name__ == '__main__':

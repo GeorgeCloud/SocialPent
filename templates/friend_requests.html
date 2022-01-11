@@ -7,10 +7,11 @@
     <div class="sent-section">
       <h2>Friend Requests Sent</h2>
       {% for request in requests_sent %}
-        <form action="/friends/request/accept" method="POST">
+        <form action="/friends/requests/delete" method="POST">
+          <input type="hidden" name="username" value="{{request[0]}}">
           <div style="display: flex; flex-direction: row;">
-            <p>{{ request['receiver'] }} | 2 days ago</p>
-            <input type="submit">
+            <p>{{ request[0] }} | {{ request[1] }} days ago</p>
+            <input type="submit" value="Cancel">
           </div>
         </form>
       {% endfor %}
