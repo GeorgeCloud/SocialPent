@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, url_for, redirect, send_file
+from flask import Flask, render_template, request, url_for, redirect, flash
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime
 
+
 app = Flask(__name__)
+app.secret_key = b's_s5#y2L"F3%4Q8&sz\n\esc]/'
 
 uri = 'mongodb://localhost:27017/Rando'
 client = MongoClient(uri)
@@ -19,12 +21,12 @@ current_user = users.find_one({'username': 'kiirb'})
 def explore():
     # Active Friends
     # Consider only fetching certain data(username, status); instead of entire object
-    friends = users.find({'_id': {'$in': current_user['friends']}})
-    # Fetch user posts, friends posts, users groups
+    friends = users.find({'_id': {'$in': current_user['friends']}}).limit(5)
+    # Aggregate current_user posts, friends posts,
 
     # Fetch Google API
 
-    return render_template('explore.html', friends=friends)
+    return render_template('explore.html', friends=friends, current_user=current_user)
 
 @app.route('/signup', methods=['GET'])
 def new_user():
@@ -47,6 +49,10 @@ def submit_user():
 def login():
     return render_template('login.html')
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    return redirect(url_for('login'))
+
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
     username = request.form['username']
@@ -55,8 +61,8 @@ def authenticate():
     user = users.find_one({'username': username})
 
     if user and user['password'] == password:
-        print('signed in')
-        return redirect(url_for('view_profile', username=username))
+        flash('Signed in')
+        return redirect(url_for('explore'))
     else:
         # Flash Message: Incorrect Password
         print('password is incorrect')
@@ -85,6 +91,10 @@ def submit_post():
 
     return redirect(url_for('view_profile', username=user['username']))
 
+@app.route('/settings', methods=['GET'])
+def user_settings():
+    return 'Settings Page in development'
+
 @app.route('/<username>', methods=['GET'])
 def view_profile(username):
     user = users.find_one({'username': username})
@@ -92,6 +102,7 @@ def view_profile(username):
     if user:
         user_posts = posts.find({'user_id': user['_id']})
         return render_template('view_profile.html', user=user, posts=user_posts)
+
     else:
         return render_template('404.html', error_message=f'{username.capitalize()} Not Found')
 
@@ -118,24 +129,29 @@ def create_friend_request():
 @app.route('/friends/requests', methods=['GET'])
 def view_friend_requests():
     requests_sent = friend_requests.find({'sender': current_user['_id']})
-    # requests_received = friend_requests.find({'sender': current_user['_id']})
+    sent = [(users.find_one({'_id': r['receiver']})['username'], (datetime.now() - r['created_on']).days) for r in
+            requests_sent]
 
-    sent = [(users.find_one({'_id': r['receiver']})['username'], (datetime.now() - r['created_on']).days) for r in requests_sent]
-    # received = [(r['created_on'], users.find_one({'_id': r['receiver']})['username']) for r in requests_received]
+    requests_received = friend_requests.find({'receiver': current_user['_id']})
+    received = [(users.find_one({'_id': r['sender']})['username'], (datetime.now() - r['created_on']).days) for r in
+                requests_received]
 
-    return render_template('friend_requests.html', requests_sent=sent)  # requests_received=received
+    return render_template('friend_requests.html', requests_sent=sent, requests_received=received)
 
 @app.route('/friends/requests/accept', methods=['POST'])
 def accept_friend_request():
-    user = users.find_one({'_id': request.form['user_id']})
+    user = users.find_one({'username': request.form['username']})
 
-    friend_request = friend_requests.find_one({'sender': current_user['_id'], 'receiver': user['user_id']})
+    friend_request = friend_requests.find_one({'sender': user['_id'], 'receiver': current_user['_id']})
 
     if friend_request:
         friend_requests.delete_one(friend_request)
 
-        current_user.insert_one( { '$addToSet': {'friends': user['_id'] } })
-        current_user.insert_one({'$addToSet': {'friends': current_user['_id']}})
+        users.update_one(current_user, { '$addToSet': {'friends': user['_id'] } })
+        users.update_one(user, {'$addToSet': {'friends': current_user['_id']}})
+
+    # Flash message if no user / request
+    return redirect(url_for('view_friend_requests'))
 
 @app.route('/friends/requests/delete', methods=['POST'])
 def delete_friend_request():

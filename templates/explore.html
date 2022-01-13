@@ -3,8 +3,24 @@
 {% block title %} Explore {% endblock %}
 
 {% block body %}
+  {% include 'partials/flash_messages.html' %}
+
   <div class="home-layout">
-    <div class="groups gd-content"><h5>Groups</h5></div>
+    <div class="trending gd-content">
+      <h5>Trending</h5>
+<!--      <div class="left-trending">-->
+<!--        <ul>-->
+<!--          <li>#Fish</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+<!--      <div class="side-by-side">-->
+<!--        <ul>-->
+<!--          <li>#Fish</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+    </div>
 
     <div class="friends gd-content">
       <h5>Friends</h5>
@@ -31,7 +47,7 @@
         </div>
 
         <div>
-          <a class="username-link" href="/kiirb">Kiirb</a>
+          <a class="username-link" href="/{{ current_user['username'] }}">{{ current_user['username'].capitalize() }}</a>
           <p>Software Developer</p>
         </div>
       </div>

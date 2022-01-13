@@ -6,6 +6,9 @@
   <div class="main-content">
     <div class="background">
       <div class="blur">
+
+        {% include 'partials/flash_messages.html' %}
+
         <div class="left-content">
           {% block content %}{% endblock %}
         </div>

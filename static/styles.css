@@ -55,17 +55,29 @@ nav {
     grid-column: column;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas: "nav     nav nav nav"
-                         "groups  map map post"
+                         "trending  map map post"
                          "friends map map activity";
     margin-bottom: 3vh;
 }
 
-.groups {
-    grid-area: groups;
+.trending {
+    grid-area: trending;
     border: solid 1px;
     margin-left: 1vw;
     height: 37vh;
 }
+
+.left-trending {
+    width: 50%;
+    height: 90%;
+    background-color: lightsteelblue;
+}
+
+/*.right-trending {*/
+/*    width: 50%;*/
+/*    height: 90%;*/
+/*    background-color: lightgrey;*/
+/*}*/
 
 .friends {
     grid-area: friends;
@@ -79,7 +91,8 @@ nav {
     flex-direction: row;
     align-items: center;
     height: 50px;
-    border: solid black 1px
+    border: solid black 1px;
+    margin-bottom: 5px;
 }
 
 .friend-profile-image {
@@ -238,7 +251,6 @@ a:link {
     display: flex;
     flex-direction: row;
     width: 100%;
-
 }
 
 .account-form {
@@ -290,16 +302,98 @@ a:link {
     height: 100%;
 }
 
-.sent-section {
-    height: 100vh;
-    width: 50vw;
-    padding: 50px;
-    background-color: lightblue;
-}
-
 .received-section {
     height: 100vh;
     width: 50vw;
     padding: 50px;
-    background-color: rgb(255, 205, 61);
+    background-color: lightsteelblue;
+    /*background-color: lightblue;*/
+}
+
+.sent-section {
+    height: 100vh;
+    width: 50vw;
+    padding: 50px;
+    background-color: lightgoldenrodyellow;
+    /*background-color: rgb(255, 205, 61);*/
+}
+
+.request-content-container {
+    display: flex;
+    flex-direction: row;
+    border: solid black 1px;
+    padding: 25px;
+    height: 90vh;
+}
+
+.request-content-container input {
+    padding: 2px;
+}
+
+.account-request {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    height: 25vh;
+    width: 15vw;
+    border: solid black 1px;
+}
+
+.account-request img {
+    height: 70%;
+    width: 100%;
+}
+
+.account-request h2 {
+    font-size: 20px;
+}
+
+.account-request p {
+    font-size: 15px;
+}
+
+.w35 {
+    width: 35%;
+    height: 95vh;
+    background-color: lightsteelblue;
+}
+
+.w65 {
+    width: 65%;
+    height: 95vh;
+    background-color: lightgoldenrodyellow;
+}
+
+
+.alert {
+    margin-top: 1vh;
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    width: 30%;
+    border-radius: 5px;
+}
+
+.center-absolute {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.close-button {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-button:hover {
+    color: black;
 }

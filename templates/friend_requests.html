@@ -3,19 +3,40 @@
 {% block title %} Friend Requests {% endblock %}
 
 {% block body %}
+  <!-- All Friends | All Friend Requests -->
   <div class="side-by-side">
-    <div class="sent-section">
-      <h2>Friend Requests Sent</h2>
-      {% for request in requests_sent %}
-        <form action="/friends/requests/delete" method="POST">
-          <input type="hidden" name="username" value="{{request[0]}}">
-          <div style="display: flex; flex-direction: row;">
-            <p>{{ request[0] }} | {{ request[1] }} days ago</p>
-            <input type="submit" value="Cancel">
-          </div>
-        </form>
-      {% endfor %}
+    <div class="received-section">
+      <h2>Friend Requests Received</h2>
+      <div class="request-content-container">
+        {% for request in requests_received %}
+          <form action="/friends/requests/accept" method="POST">
+            <input type="hidden" name="username" value="{{request[0]}}">
+            <div class="account-request">
+              <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
+              <h2>{{ request[0] }}</h2>
+              <p><b>sent {{ request[1] or 100 }} days ago</b></p>
+              <input type="submit" value="Accept">
+            </div>
+          </form>
+        {% endfor %}
+      </div>
     </div>
 
+    <div class="sent-section">
+      <h2>Friend Requests Sent</h2>
+      <div class="request-content-container">
+        {% for request in requests_sent %}
+          <form action="/friends/requests/delete" method="POST">
+            <input type="hidden" name="username" value="{{request[0]}}">
+            <div class="account-request">
+              <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
+              <h2>{{ request[0] }}</h2>
+              <p><b>sent {{ request[1] or 100 }} days ago</b></p>
+              <input type="submit" value="Cancel">
+            </div>
+          </form>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 {% endblock %}
