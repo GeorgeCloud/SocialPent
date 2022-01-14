@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 from datetime import datetime
 import bcrypt
 
@@ -25,12 +24,7 @@ def explore():
         return redirect(url_for('login'))
 
     current_user = users.find_one({'username': session['username']})
-    # Active Friends
-    # Consider only fetching certain data(username, status); instead of entire object
     friends = users.find({'_id': {'$in': current_user['friends']}}).limit(5)
-    # Aggregate current_user posts, friends posts,
-
-    # Fetch Google API
 
     return render_template('explore.html', friends=friends, current_user=current_user)
 
@@ -85,11 +79,6 @@ def authenticate():
         flash('The password you’ve entered is incorrect.')
         return redirect(url_for('login'))
 
-# @app.route('/friends', methods=['GET'])
-# def get_friends():
-#     return loads(users.find(
-#         {'_id': {'$in': [current_user['_id']]}}
-#     ))
 
 @app.route('/post', methods=['POST'])
 def submit_post():
@@ -119,7 +108,7 @@ def view_profile(username):
 
     if user:
         user_posts = posts.find({'user_id': user['_id']})
-        return render_template('view_profile.html', user=user, posts=user_posts)
+        return render_template('view_profile.html', current_user=current_user, user=user, posts=user_posts)
 
     else:
         return render_template('404.html', current_user=current_user, error_message=f'{username.capitalize()} Not Found')
