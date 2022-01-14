@@ -1,6 +1,7 @@
 * { padding: 0; margin: 0;}
 
 ul {
+    list-style:none;
 }
 
 .user-stats {
@@ -359,8 +360,8 @@ a:link {
 }
 
 .w65 {
-    width: 65%;
-    height: 95vh;
+    /*width: 65%;*/
+    /*height: 95vh;*/
     background-color: lightgoldenrodyellow;
 }
 
@@ -396,4 +397,38 @@ a:link {
 
 .close-button:hover {
     color: black;
+}
+#map {
+  height: 95%;
+}
+#profile-picture {
+    margin-top: 20px;
+    height: 20vh;
+    width: 20vw;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.posts {
+    display: flex;
+    flex-direction: row;
+    max-width: 60vw;
+    min-width: 60vw;
+    padding: 20px;
+}
+
+.post {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+
+hr {
+  border-top: 1px solid black;
+}
+
+li {
+    text-decoration:;
 }

@@ -8,18 +8,7 @@
   <div class="home-layout">
     <div class="trending gd-content">
       <h5>Trending</h5>
-<!--      <div class="left-trending">-->
-<!--        <ul>-->
-<!--          <li>#Fish</li>-->
-<!--        </ul>-->
-<!--      </div>-->
-
-<!--      <div class="side-by-side">-->
-<!--        <ul>-->
-<!--          <li>#Fish</li>-->
-<!--        </ul>-->
-<!--      </div>-->
-
+      <p>#movies #sounds #color #youtube #apple #h&m</p>
     </div>
 
     <div class="friends gd-content">
@@ -43,7 +32,7 @@
 
       <div class="side-by-side center">
         <div>
-          <img class="profile-image-explore" src="{{ url_for('static', filename='/images/cover2.jpg') }}" alt="Dark Road">
+          <img class="profile-image-explore" src="{{ url_for('static', filename='/images/profile-picture.png') }}" alt="Dark Road">
         </div>
 
         <div>
@@ -63,4 +52,13 @@
 
     <div class="activity gd-content"><h5>Activity</h5></div>
   </div>
+
+  <script>
+  function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8,
+  });
+}
+  </script>
 {% endblock %}

@@ -6,24 +6,28 @@
 
 {% block body %}
   <div class="side-by-side">
-    <div class="w35">
-      <h1>User: {{ user['username'] }}</h1>
-      <ul class="user-stats">
-        <li>posts: 0</li>
-        <li>followers: 0</li>
-        <li>following: 0</li>
-      </ul>
-      <form action="/friends/add" method="POST">
-        <input type="hidden" name="username" value="{{ user['username'] }}">
-        <input type="submit" class="button-add-friend" value="Add Friend">
-      </form>
+    <div class="w35 padding-20">
+        <img id="profile-picture" src="{{ url_for('static', filename='images/profile-picture.png') }}" alt="">
+        <h1>User: {{ user['username'] }}</h1>
+        <ul class="user-stats">
+          <li>Posts: 0</li>
+          <li>Friends: 0</li>
+          <li>Followers: 0</li>
+        </ul>
+        <form action="/friends/add" method="POST">
+          <input type="hidden" name="username" value="{{ user['username'] }}">
+          <input type="submit" class="button-add-friend" value="Add Friend">
+        </form>
     </div>
-    <div class="w65">
-    {% for post in posts %}
-      <h5>{{post['message']}}</h5>
-      <br>
-      <hr>
-    {% endfor %}
+
+    <div class="posts">
+      {% for post in posts %}
+          <div class="post">
+            <h5>{{post['message']}}</h5>
+            <hr>
+            <p>1 day ago</p>
+          </div>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}
