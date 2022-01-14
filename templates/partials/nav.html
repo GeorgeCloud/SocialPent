@@ -6,17 +6,22 @@
     </a>
   </div>
 
-  <form id="user-search" class="side-by-side">
-    <input id="username" type="text" class="username-search" placeholder="Username">
-    <input type="submit" name="username" value="Search">
-  </form>
+  {% if current_user %}
+    <form id="user-search" class="side-by-side">
+      <input id="username" type="text" class="username-search" placeholder="Username">
+      <input type="submit" name="username" value="Search">
+    </form>
+  {% endif %}
 
   <ul class="nav-options">
-    <li><a href="/">Explore</a></li>
-    <li><a href="/friends/requests">Requests</a></li>
-    <li><a class="hover-effect" href="/settings">Settings</a></li>
-    <li><a class="hover-effect" href="/login">Login</a></li>
-    <li><a class="hover-effect" href="/logout">Logout</a></li>
+    {% if current_user %}
+      <li><a href="/">Explore</a></li>
+      <li><a href="/friends/requests">Requests</a></li>
+      <li><a class="hover-effect" href="/{{ current_user['username'] }}">Profile</a></li>
+      <li><a class="hover-effect" href="/logout">Logout</a></li>
+    {% else %}
+      <li><a class="hover-effect" href="/login">Login</a></li>
+    {% endif %}
   </ul>
 </nav>
 

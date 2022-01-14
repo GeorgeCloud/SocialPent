@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, url_for, redirect, flash
+from flask import Flask, render_template, request, url_for, redirect, flash, session
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime
+import bcrypt
 
 
 app = Flask(__name__)
@@ -15,10 +16,15 @@ users = db.users
 posts = db.posts
 friend_requests = db.friendRequests
 
-current_user = users.find_one({'username': 'kiirb'})
+def is_authenticated():
+    return 'username' in session
 
 @app.route('/', methods=['GET'])
 def explore():
+    if not is_authenticated():
+        return redirect(url_for('login'))
+
+    current_user = users.find_one({'username': session['username']})
     # Active Friends
     # Consider only fetching certain data(username, status); instead of entire object
     friends = users.find({'_id': {'$in': current_user['friends']}}).limit(5)
@@ -38,7 +44,7 @@ def submit_user():
         'username': request.form['username'],
         'name': request.form['name'].title(),
         'email': request.form['email'],
-        'password': request.form['password'],
+        'password': bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt()),
         'friends': [],
     }
     users.insert_one(user)
@@ -47,25 +53,36 @@ def submit_user():
 
 @app.route('/login', methods=['GET'])
 def login():
+    if is_authenticated():
+        # username = session["username"]
+        flash('Signed in')
+        return redirect(url_for('explore'))
+
     return render_template('login.html')
 
 @app.route('/logout', methods=['GET'])
 def logout():
+    if is_authenticated():
+        session.pop('username', None)
+        flash('Successfully logged out.')
+
     return redirect(url_for('login'))
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
+    if is_authenticated():
+        return redirect(url_for('login'))  # redirect to explore
+
     username = request.form['username']
     password = request.form['password']
 
     user = users.find_one({'username': username})
+    if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        session['username'] = username
+        return redirect(url_for('login'))
 
-    if user and user['password'] == password:
-        flash('Signed in')
-        return redirect(url_for('explore'))
     else:
-        # Flash Message: Incorrect Password
-        print('password is incorrect')
+        flash('The password you’ve entered is incorrect.')
         return redirect(url_for('login'))
 
 # @app.route('/friends', methods=['GET'])
@@ -77,19 +94,16 @@ def authenticate():
 @app.route('/post', methods=['POST'])
 def submit_post():
     # Get coordinates of users location
+    if not is_authenticated():
+        return redirect(url_for('login'))
 
-    # current_user
-    user = users.find_one({'username': 'kiirb'})
+    current_user = users.find_one({'username': session['username']})
 
-    post = {
-        'user_id': user['_id'],
-        'message': request.form['message'],
-        'created_on': datetime.now(),
-    }
+    post = dict(user_id=current_user['_id'], message=request.form['message'], created_on=datetime.now())
 
     posts.insert_one(post)
 
-    return redirect(url_for('view_profile', username=user['username']))
+    return redirect(url_for('view_profile', username=current_user['username']))
 
 @app.route('/settings', methods=['GET'])
 def user_settings():
@@ -97,6 +111,10 @@ def user_settings():
 
 @app.route('/<username>', methods=['GET'])
 def view_profile(username):
+    if not is_authenticated():
+        return redirect(url_for('login'))
+
+    current_user = users.find_one({'username': session['username']})
     user = users.find_one({'username': username})
 
     if user:
@@ -104,11 +122,12 @@ def view_profile(username):
         return render_template('view_profile.html', user=user, posts=user_posts)
 
     else:
-        return render_template('404.html', error_message=f'{username.capitalize()} Not Found')
+        return render_template('404.html', current_user=current_user, error_message=f'{username.capitalize()} Not Found')
 
 @app.route('/friends/add', methods=['POST'])
 def create_friend_request():
     # TODO: Handle accepting friend request before sending one.
+    current_user = users.find_one({'username': session['username']})
     user = users.find_one({'username': request.form['username']})
 
     if user:
@@ -128,18 +147,24 @@ def create_friend_request():
 
 @app.route('/friends/requests', methods=['GET'])
 def view_friend_requests():
-    requests_sent = friend_requests.find({'sender': current_user['_id']})
-    sent = [(users.find_one({'_id': r['receiver']})['username'], (datetime.now() - r['created_on']).days) for r in
-            requests_sent]
+    if is_authenticated():
+        current_user = users.find_one({'username': session['username']})
+        requests_sent = friend_requests.find({'sender': current_user['_id']})
 
-    requests_received = friend_requests.find({'receiver': current_user['_id']})
-    received = [(users.find_one({'_id': r['sender']})['username'], (datetime.now() - r['created_on']).days) for r in
-                requests_received]
+        sent = [(users.find_one({'_id': r['receiver']})['username'], (datetime.now() - r['created_on']).days) for r in
+                requests_sent]
 
-    return render_template('friend_requests.html', requests_sent=sent, requests_received=received)
+        requests_received = friend_requests.find({'receiver': current_user['_id']})
+        received = [(users.find_one({'_id': r['sender']})['username'], (datetime.now() - r['created_on']).days) for r in
+                    requests_received]
+
+        return render_template('friend_requests.html', requests_sent=sent, requests_received=received, current_user=current_user)
+
+    return redirect(url_for('login'))
 
 @app.route('/friends/requests/accept', methods=['POST'])
 def accept_friend_request():
+    current_user = users.find_one({'username': session['username']})
     user = users.find_one({'username': request.form['username']})
 
     friend_request = friend_requests.find_one({'sender': user['_id'], 'receiver': current_user['_id']})
@@ -155,6 +180,7 @@ def accept_friend_request():
 
 @app.route('/friends/requests/delete', methods=['POST'])
 def delete_friend_request():
+    current_user = users.find_one({'username': session['username']})
     user = users.find_one({'username': request.form['username']})
 
     friend_requests.delete_one({'sender': current_user['_id'], 'receiver': user['_id']})
