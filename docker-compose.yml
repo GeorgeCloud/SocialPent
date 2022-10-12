@@ -11,5 +11,5 @@
       depends_on:
         - mongo
     mongo:
-      image: mongo
+      image: mongo:4.4.10 # server requirement
       restart: always
