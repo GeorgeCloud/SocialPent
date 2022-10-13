@@ -1,15 +1,17 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from pymongo import MongoClient
 from datetime import datetime
-import bcrypt
 from os import environ
-
+import requests
+import bcrypt
 
 app = Flask(__name__)
+
 app.secret_key = b's_s5#y2L"F3%4Q8&sz\n\esc]/'
 
 uri = environ.get('MONGODB_URI', 'mongodb://localhost:27017/reveal')
 client = MongoClient(uri)
+
 db = client.get_default_database()
 
 users = db.users
@@ -29,9 +31,16 @@ def explore():
 
     return render_template('explore.html', friends=friends, current_user=current_user)
 
+@app.route('/events', methods=['GET'])
+def events():
+    TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?apikey={environ.get("TICKETMASTER_API_KEY")}'
+    events = requests.get(url=TM_API_URL).json()
+
+    return render_template('events.html', events=events)
+
 @app.route('/signup', methods=['GET'])
-def new_user():
-    return render_template('new_user.html')
+def signup():
+    return render_template('signup.html')
 
 @app.route('/users/create', methods=['POST'])
 def submit_user():
@@ -72,6 +81,7 @@ def authenticate():
     password = request.form['password']
 
     user = users.find_one({'username': username})
+
     if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
         session['username'] = username
         return redirect(url_for('login'))
@@ -179,4 +189,4 @@ def delete_friend_request():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
