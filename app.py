@@ -187,6 +187,10 @@ def delete_friend_request():
 
     return redirect(url_for('view_friend_requests'))
 
+# Google Map
+@app.route('/googlemap')
+def display_google_map():
+    return render_template('googlemap.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
