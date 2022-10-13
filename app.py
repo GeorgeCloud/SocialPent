@@ -33,10 +33,12 @@ def explore():
 
 @app.route('/events', methods=['GET'])
 def events():
-    TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?apikey={environ.get("TICKETMASTER_API_KEY")}'
-    events = requests.get(url=TM_API_URL).json()
-
-    return render_template('events.html', events=events['_embedded']['events'])
+    TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?size=1&apikey={environ.get("TICKETMASTER_API_KEY")}'
+    import json
+    PARAMS = {}
+    events = requests.get(url=TM_API_URL, params=PARAMS).json()['_embedded']['events']
+    print(json.dumps(events, indent=4))
+    return render_template('events.html', events=events)
 
 @app.route('/signup', methods=['GET'])
 def signup():

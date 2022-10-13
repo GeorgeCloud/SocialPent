@@ -6,7 +6,14 @@
 
   <h1>Events</h1>
   {% for event in events %}
-    <p>{{ events }}</p>
+    <a href="{{event.url}}">Event Name:  {{ event.name }}</a>
+    <p>Event Date:  {{ event.dates.start.localDate }}</p>
+    <p>Event Time:  {{ event.dates.start.localTime }}</p>
+    <p>Location:    {{ event['_embedded']['venues'][0]['address']['line1'] }}</p>
+    <p>Coordinates: {{ event['_embedded']['venues'][0]['location'] }}</p>
+
+    <p>image_paths: {{ event.images[0] }}</p>
+    <br>
   {% endfor %}
 
 {% endblock %}
