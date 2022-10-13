@@ -7,10 +7,13 @@
   <h1>Events</h1>
   {% for event in events %}
     <a href="{{event.url}}">Event Name:  {{ event.name }}</a>
-    <p>Event Date:  {{ event.dates.start.localDate }}</p>
-    <p>Event Time:  {{ event.dates.start.localTime }}</p>
-    <p>Location:    {{ event['_embedded']['venues'][0]['address']['line1'] }}</p>
-    <p>Coordinates: {{ event['_embedded']['venues'][0]['location'] }}</p>
+    <p>Event Type:   {{ event.type }}</p>
+    <p>Event Price: ${{ event.priceRanges[0].min }} - ${{ event.priceRanges[0].max }}</p>
+    <p>Event Date:   {{ event.dates.start.localDate }}</p>
+    <p>Event Time:   {{ event.dates.start.localTime }}</p>
+    <p>Location:     {{ event['_embedded']['venues'][0]['address']['line1'] }}</p>
+    <p>Coordinates:  {{ event['_embedded']['venues'][0]['location'] }}</p>
+    <p>Event Info    {{ event.info }}</p>
 
     <p>image_paths: {{ event.images[0] }}</p>
     <br>
