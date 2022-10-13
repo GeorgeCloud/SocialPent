@@ -36,7 +36,7 @@ def events():
     TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?apikey={environ.get("TICKETMASTER_API_KEY")}'
     events = requests.get(url=TM_API_URL).json()
 
-    return render_template('events.html', events=events)
+    return render_template('events.html', events=events['_embedded']['events'])
 
 @app.route('/signup', methods=['GET'])
 def signup():

@@ -54,8 +54,13 @@ function initMap(e) {
         });
         map.setCenter(pos);
 
-        let service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(request, processResults);
+        // Add events
+        // results = []
+        createMarker(37.954340, -122.369720)
+
+
+        // let service = new google.maps.places.PlacesService(map);
+        // service.nearbySearch(request, processResults);
       },
       function() {
         handleLocationError(true, infoWindow, map.getCenter());
@@ -67,34 +72,39 @@ function initMap(e) {
   }
 }
 
-function processResults(results, status) {
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-    for (let i = 0; i < results.length; i++) {
-      createMarker(results[i])
-      des.push({
-        lat: results[i].geometry.location.lat(),
-        lng: results[i].geometry.location.lng()
-      })
-      searchResults.push(new SearchResultsObject(results[i].name, results[i].vicinity));
-      if (!results[i].photos) {
-        searchResults[i].imgUrl = 'http://via.placeholder.com/350x150';
-      } else {
-        searchResults[i].imgUrl = results[i].photos[0].getUrl({maxWidth: 1000});
-      }
-    }
-    // console.log(results);
-  }
-}
+// function processResults(results, status) {
+//   if (status === google.maps.places.PlacesServiceStatus.OK) {
+//     for (let i = 0; i < results.length; i++) {
+//       createMarker(results[i])
+//       des.push({
+//         lat: results[i].geometry.location.lat(),
+//         lng: results[i].geometry.location.lng()
+//       })
+//       searchResults.push(new SearchResultsObject(results[i].name, results[i].vicinity));
+//       if (!results[i].photos) {
+//         searchResults[i].imgUrl = 'http://via.placeholder.com/350x150';
+//       } else {
+//         searchResults[i].imgUrl = results[i].photos[0].getUrl({maxWidth: 1000});
+//       }
+//     }
+//     console.log(results);
+//   }
+// }
 
 // creates the markers
-function createMarker(place) {
+function createMarker(longitude, latitude) {
   let marker = new google.maps.Marker({
-    position: place.geometry.location,
+    position: {
+      lat: longitude,
+      lng: latitude
+    },
     map: map
   });
+
+
 // this code lets you click on the marker for more info
   google.maps.event.addListener(marker, 'click', function() {
-    infoWindow.setContent(place.name);
+    infoWindow.setContent('EVENT NAME');
     infoWindow.open(map, this);
   });
 }
