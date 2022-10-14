@@ -1,6 +1,7 @@
 body {
     height: 100vh;
 }
+
 #google-map {
-    height: 60%;
+    height: 100%;
 }
