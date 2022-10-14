@@ -26,12 +26,8 @@
     </div>
 
     <div class="map gd-content">
-      <button onclick="initMap(event)">Load Events</button>
-
-      <div id="google-map">
-        <h5>Map</h5>
-
-      </div>
+      <!-- Google Map with event data here -->
+      <div id="google-map"></div>
     </div>
 
     <div class="post gd-content">
@@ -60,15 +56,7 @@
     <div class="activity gd-content"><h5>Activity</h5></div>
   </div>
 
-  <!-- <script>
-  function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
-  });
-}
-  </script> -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFvCBTC4gncWVqiOHfjbPWRQsmI9DXFP4&libraries="></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFvCBTC4gncWVqiOHfjbPWRQsmI9DXFP4&libraries="></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="static/googlemap.js"></script>
 {% endblock %}

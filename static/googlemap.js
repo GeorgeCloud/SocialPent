@@ -3,51 +3,48 @@ console.log('map is here')
 let map, infoWindow;
 let pos = {};
 
-function initMap(e) {
-  e.preventDefault();
-  map = new google.maps.Map(document.getElementById('google-map'), {
-    center: {
-      lat: 47.6182,
-      lng: -122.3519
-    },
-    zoom: 10
-  });
-  infoWindow = new google.maps.InfoWindow();
+map = new google.maps.Map(document.getElementById('google-map'), {
+  center: {
+    lat: 47.6182,
+    lng: -122.3519
+  },
+  zoom: 10
+});
+infoWindow = new google.maps.InfoWindow();
 
-  // Use HTML5 geolocation.
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-        pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
+// Use HTML5 geolocation.
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
 
-        // User's current location
-        let marker = new google.maps.Marker({
-          position: pos,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png', // image,
-          animation: google.maps.Animation.DROP,
-          map: map
+      // User's current location
+      let marker = new google.maps.Marker({
+        position: pos,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png', // image,
+        animation: google.maps.Animation.DROP,
+        map: map
+      });
+      map.setCenter(pos);
+
+      fetch('http://127.0.0.1:5000/events')
+        .then((response) => response.json())
+        .then((events) => {
+          for (let i=0; i<events.length; i++){
+            createMarker(events[i])
+          }
         });
-        map.setCenter(pos);
-
-        fetch('http://127.0.0.1:5000/events')
-          .then((response) => response.json())
-          .then((events) => {
-            for (let i=0; i<events.length; i++){
-              createMarker(events[i])
-            }
-          });
-      },
-      function() {
-        handleLocationError(true, infoWindow, map.getCenter());
-      }
-    );
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
-  }
+    },
+    function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    }
+  );
+} else {
+  // Browser doesn't support Geolocation
+  handleLocationError(false, infoWindow, map.getCenter());
 }
 
 function createMarker(event) {
