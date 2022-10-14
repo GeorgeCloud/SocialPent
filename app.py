@@ -54,11 +54,11 @@ def cleanup_api_data(api_events):
 
     return events
 
-@app.route('/events', methods=['GET'])
-def events():
+@app.route('/events/<coords>', methods=['GET'])
+def events(coords):
     TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?apikey={environ.get("TICKETMASTER_API_KEY")}'
 
-    PARAMS = {'latlong': '37.9539745,-122.3696729'}
+    PARAMS = {'latlong': coords}
 
     api_events = requests.get(url=TM_API_URL, params=PARAMS).json()
 
