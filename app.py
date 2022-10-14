@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, flash, session
+from flask import Flask, render_template, request, url_for, redirect, flash, session, jsonify
 from pymongo import MongoClient
 from datetime import datetime
 from os import environ
@@ -31,14 +31,42 @@ def explore():
 
     return render_template('explore.html', friends=friends, current_user=current_user)
 
+def cleanup_api_data(api_events):
+    events = []
+
+    for event in api_events['_embedded']['events']:
+        venue_info = event['_embedded']['venues'][0]
+        # e_price = event['priceRanges'][0]
+        e_info  = event['dates']['start']
+
+        events.append({
+            'name'       : event['name'],
+            'type'       : event['type'],
+            # 'price'      : {'min': e_price['min'], 'max': e_price['max']},
+            'date'       : e_info['localDate'],
+            # 'time'       : e_info['localTime'],
+            'address'    : venue_info['address']['line1'],
+            'coordinates': venue_info['location'],
+            # 'info'       : event['info'],
+            'image_path' : event['images'][0]['url'],
+            'url'        : event['url']
+        })
+
+    return events
+
 @app.route('/events', methods=['GET'])
 def events():
-    TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?size=1&apikey={environ.get("TICKETMASTER_API_KEY")}'
-    import json
-    PARAMS = {}
-    events = requests.get(url=TM_API_URL, params=PARAMS).json()['_embedded']['events']
-    print(json.dumps(events, indent=4))
-    return render_template('events.html', events=events)
+    TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?apikey={environ.get("TICKETMASTER_API_KEY")}'
+
+    PARAMS = {'city': 'Riverside', 'radius': '500'}
+
+    api_events = requests.get(url=TM_API_URL, params=PARAMS).json()
+
+    events = cleanup_api_data(api_events)
+
+    print(jsonify(events).data)
+
+    return jsonify(events)
 
 @app.route('/signup', methods=['GET'])
 def signup():

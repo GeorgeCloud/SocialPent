@@ -1,17 +1,7 @@
 'use strict';
 
-
 let map, infoWindow;
 let pos = {};
-
-let searchResults = [];
-
-function SearchResultsObject(name, add, imgUrl) {
-  this.name = name;
-  this.address = add;
-  this.imgUrl = imgUrl;
-}
-
 
 function initMap(e) {
   e.preventDefault();
@@ -24,7 +14,7 @@ function initMap(e) {
   });
   infoWindow = new google.maps.InfoWindow();
 
-  // Try HTML5 geolocation.
+  // Use HTML5 geolocation.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       function(position) {
@@ -33,19 +23,7 @@ function initMap(e) {
           lng: position.coords.longitude
         };
 
-        searchResults = [];
-
-        let request = {
-          location: pos,
-          radius: '500',
-          keyword: [$('#search').val()]// search by keyword
-        };
-
-        // empty the handlebars and results
-        searchResults = [];
-        $('.search-details').empty();
-
-        // this is my current Location
+        // User's current location
         let marker = new google.maps.Marker({
           position: pos,
           icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png', // image,
@@ -54,13 +32,13 @@ function initMap(e) {
         });
         map.setCenter(pos);
 
-        // Add events
-        // results = []
-        createMarker(37.954340, -122.369720)
-
-
-        // let service = new google.maps.places.PlacesService(map);
-        // service.nearbySearch(request, processResults);
+        fetch('http://127.0.0.1:5000/events')
+          .then((response) => response.json())
+          .then((events) => {
+            for (let i=0; i<events.length; i++){
+              createMarker(events[i])
+            }
+          });
       },
       function() {
         handleLocationError(true, infoWindow, map.getCenter());
@@ -72,45 +50,28 @@ function initMap(e) {
   }
 }
 
-// function processResults(results, status) {
-//   if (status === google.maps.places.PlacesServiceStatus.OK) {
-//     for (let i = 0; i < results.length; i++) {
-//       createMarker(results[i])
-//       des.push({
-//         lat: results[i].geometry.location.lat(),
-//         lng: results[i].geometry.location.lng()
-//       })
-//       searchResults.push(new SearchResultsObject(results[i].name, results[i].vicinity));
-//       if (!results[i].photos) {
-//         searchResults[i].imgUrl = 'http://via.placeholder.com/350x150';
-//       } else {
-//         searchResults[i].imgUrl = results[i].photos[0].getUrl({maxWidth: 1000});
-//       }
-//     }
-//     console.log(results);
-//   }
-// }
-
-// creates the markers
-function createMarker(longitude, latitude) {
+function createMarker(event) {
   let marker = new google.maps.Marker({
     position: {
-      lat: longitude,
-      lng: latitude
+      lat: parseFloat(event.coordinates.latitude),
+      lng: parseFloat(event.coordinates.longitude)
     },
     map: map
   });
 
+  const contentString =
+  `<h1 id="firstHeading" class="firstHeading"> ${event.name}</h1>
+  <p>${event.address}</p>
+  <a href="${event.url}" target="_blank">event details</a>`
 
-// this code lets you click on the marker for more info
+// Google Maps marker info
   google.maps.event.addListener(marker, 'click', function() {
-    infoWindow.setContent('EVENT NAME');
+    infoWindow.setContent(contentString);
     infoWindow.open(map, this);
   });
 }
 
-
-// this functions tell you if you are allowed the GPS to be accessed.
+// Warn user when geolocation fails
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(browserHasGeolocation ?
