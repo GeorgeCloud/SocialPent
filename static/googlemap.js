@@ -49,7 +49,7 @@ if (navigator.geolocation) {
         map: map
       });
       map.setCenter(pos);
-      fetch(`http://127.0.0.1:5000/events/${pos.lat},${pos.lng}`)
+      fetch(`http://127.0.0.1:5000/events/${pos.lat},${pos.lng}`, {mode: 'no-cors'})
         .then((response) => response.json())
         .then((events) => {
           for (let i=0; i<events.length; i++){
