@@ -58,7 +58,7 @@ def cleanup_api_data(api_events):
 def events():
     TM_API_URL = f'https://app.ticketmaster.com/discovery/v2/events.json?apikey={environ.get("TICKETMASTER_API_KEY")}'
 
-    PARAMS = {'city': 'Riverside', 'radius': '500'}
+    PARAMS = {'city': 'San Francisco'}
 
     api_events = requests.get(url=TM_API_URL, params=PARAMS).json()
 
