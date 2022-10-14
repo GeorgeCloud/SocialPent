@@ -1,16 +1,16 @@
 'use strict';
-
+console.log('map is here')
 let map, infoWindow;
 let pos = {};
 
 function initMap(e) {
   e.preventDefault();
-  map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('google-map'), {
     center: {
       lat: 47.6182,
       lng: -122.3519
     },
-    zoom: 16
+    zoom: 10
   });
   infoWindow = new google.maps.InfoWindow();
 

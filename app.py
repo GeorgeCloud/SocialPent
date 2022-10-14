@@ -64,8 +64,6 @@ def events():
 
     events = cleanup_api_data(api_events)
 
-    print(jsonify(events).data)
-
     return jsonify(events)
 
 @app.route('/signup', methods=['GET'])

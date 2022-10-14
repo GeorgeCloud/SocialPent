@@ -111,7 +111,7 @@ nav {
     grid-area: map;
     height: 80vh;
     border: solid 1px;
-    background-image: url("/static/images/map.png");
+    /* background-image: url("/static/images/map.png"); */
     background-size: cover;
     background-position: center;
 }
