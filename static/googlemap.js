@@ -1,5 +1,5 @@
 'use strict';
-console.log('map is here')
+
 let map, infoWindow;
 let pos = {};
 
@@ -49,7 +49,7 @@ if (navigator.geolocation) {
         map: map
       });
       map.setCenter(pos);
-      fetch(`http://127.0.0.1:5000/events/${pos.lat},${pos.lng}`, {mode: 'no-cors'})
+      fetch(`${window.location.origin}/events/${pos.lat},${pos.lng}`, {mode: 'no-cors'})
         .then((response) => response.json())
         .then((events) => {
           for (let i=0; i<events.length; i++){
