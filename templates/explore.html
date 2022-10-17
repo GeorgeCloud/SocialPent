@@ -3,7 +3,7 @@
 {% block title %} Explore {% endblock %}
 
 {% block body %}
-  {% include 'partials/flash_messages.html' %}
+  <!-- {% include 'partials/flash_messages.html' %} -->
 
   <div class="home-layout">
     <div class="trending gd-content">
@@ -31,16 +31,18 @@
     </div>
 
     <div class="post gd-content">
-      <h5>Post</h5>
+      <div class="to-flex">
+        <h5>Post</h5>
 
-      <div class="side-by-side center">
-        <div>
-          <img class="profile-image-explore" src="{{ url_for('static', filename='/images/profile-picture.png') }}" alt="Dark Road">
-        </div>
+        <div class="side-by-side center">
+          <div>
+            <img class="profile-image-explore" src="{{ url_for('static', filename='/images/profile-picture.png') }}" alt="Dark Road">
+          </div>
 
-        <div>
-          <a class="username-link" href="/{{ current_user['username'] }}">{{ current_user['username'].capitalize() }}</a>
-          <p>Software Developer</p>
+          <div>
+            <a class="username-link" href="/{{ current_user['username'] }}">{{ current_user['username'].capitalize() }}</a>
+            <p>Software Developer</p>
+          </div>
         </div>
       </div>
 

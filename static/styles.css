@@ -19,6 +19,12 @@ body {
 textarea {
     resize: none;
     padding: 5px;
+    width: 180px;
+}
+
+.to-flex {
+    display: flex;
+    flex-direction: row;
 }
 
 nav {
@@ -119,21 +125,24 @@ nav {
 .post {
     grid-area: post;
     border: solid 1px;
-    margin-right: 1vw;
-    height: 37vh;
+    width: 91%;
+    height: 95%;
+    padding: 10px;
+    display: flex;
 }
 
 .activity {
     grid-area: activity;
     border: solid 1px;
-    margin-right: 1vw;
     height: 37vh;
+    width: 95%;
 }
 
 .profile-image-explore {
-    height: 100px;
-    width: 80px;
+    height: 130px;
+    width: 130px;
 }
+
 
 
 a:link {
@@ -182,6 +191,7 @@ a:link {
     background-color: rgb(255, 255, 255);
 }
 
+
 .ml-10 {
     margin-left: 10px;
 }
@@ -207,10 +217,12 @@ a:link {
     padding-left: 50px;
 }
 
+
 .center {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-left: 20px;
 }
 
 .centered {
@@ -222,6 +234,7 @@ a:link {
 
 .submit-message {
     padding: 10px 50px;
+    width: 100%;
     margin-left: auto;
 }
 
@@ -249,7 +262,6 @@ a:link {
 
 .side-by-side {
     display: flex;
-    flex-direction: row;
     width: 100%;
 }
 
@@ -283,12 +295,13 @@ a:link {
 }
 
 .background {
-    background-image: url("images/signed_out.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: rgb(5, 178, 255);
     height: 100%;
-    width: 100%;
+    width: 50%;
+}
+
+.outter-background {
+    background-color: white;
 }
 
 .button-add-friend {
@@ -368,7 +381,7 @@ a:link {
 .alert {
     margin-top: 1vh;
     padding: 20px;
-    background-color: #f44336;
+    background-color: #234996;
     color: white;
     width: 30%;
     border-radius: 5px;
@@ -418,12 +431,6 @@ a:link {
     max-width: 60vw;
     min-width: 60vw;
     padding: 20px;
-}
-
-.post {
-    width: 100px;
-    height: 100px;
-    padding: 10px;
 }
 
 hr {
