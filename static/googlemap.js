@@ -5,8 +5,6 @@ let pos = {};
 
 map = new google.maps.Map(document.getElementById('google-map'), {
   center: {
-    lat: 47.6182,
-    lng: -122.3519
   },
   zoom: 10,
   styles: [
