@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from os import environ
+from db import db
 import requests
 
 events_bp = Blueprint('events_bp', __name__, template_folder='templates')

@@ -1,4 +1,5 @@
-from flask import Blueprint
+from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
+from db import db
 
 friends_bp = Blueprint('friends_bp', __name__, template_folder='templates')
 
@@ -38,7 +39,7 @@ def view_friend_requests():
 
         return render_template('friend_requests.html', requests_sent=sent, requests_received=received, current_user=current_user)
 
-    return redirect(url_for('login'))
+    return redirect(url_for('auth_bp.login'))
 
 @friends_bp.route('/requests/accept', methods=['POST'])
 def accept_friend_request():
