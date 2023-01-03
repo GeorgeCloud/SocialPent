@@ -18,7 +18,7 @@
         <div class="friend-container">
           <img class="friend-profile-image" src="{{ url_for('static', filename='/images/profile_image.png') }}" alt="Friend Profile Picture">
 
-          <a href="/{{friend['username']}}">{{ friend['username'].capitalize() }}</a>
+          <a href="/u/{{friend['username']}}">{{ friend['username'].capitalize() }}</a>
 
           <img class="online-status" src="{{ url_for('static', filename='/images/green.png') }}" alt="">
         </div>
@@ -40,7 +40,7 @@
           </div>
 
           <div>
-            <a class="username-link" href="/{{ current_user['username'] }}">{{ current_user['username'].capitalize() }}</a>
+            <a class="username-link" href="{{ url_for('users_bp.view_profile', username=current_user['username']) }}">{{ current_user['username'].capitalize() }}</a>
             <p>Software Developer</p>
           </div>
         </div>

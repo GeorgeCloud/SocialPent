@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from extensions import *
 from os import environ
 from db import db
 import requests

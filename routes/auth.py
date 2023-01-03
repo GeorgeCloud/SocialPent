@@ -12,7 +12,6 @@ def signup():
 @auth_bp.route('/login', methods=['GET'])
 def login():
     if is_authenticated():
-        # username = session["username"]
         flash('Signed in')
         return redirect(url_for('explore'))
 
@@ -21,14 +20,13 @@ def login():
 @auth_bp.route('/logout', methods=['GET'])
 @login_required
 def logout():
-    session.pop('username', None)
+    session.pop('current_user', None)
     flash('Successfully logged out.')
 
-    return redirect(url_for('explore'))
+    return redirect(url_for('auth_bp.login'))
 
 @auth_bp.route('/new-user', methods=['POST'])
 def create_user():
-    print('inside')
     user = {
         'username': request.form['username'],
         'name': request.form['name'].title(),
@@ -38,12 +36,12 @@ def create_user():
     }
     db.users.insert_one(user)
 
-    return redirect(url_for('view_profile', username=user['username']))
+    return redirect(url_for('users_bp.view_profile', username=user['username']))
 
 @auth_bp.route('/authenticate', methods=['POST'])
 def authenticate():
     if is_authenticated():
-        return redirect(url_for('auth_bp.login'))  # redirect to explore
+        return redirect(url_for('explore'))
 
     username = request.form['username']
     password = request.form['password']
@@ -51,7 +49,13 @@ def authenticate():
     user = db.users.find_one({'username': username})
 
     if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
-        session['username'] = username
+        del user['password']
+        user['_id'] = str(user['_id'])
+        session['current_user'] = user
+
+        ### 1:40 am. Need to convert objectid to string and convert string back to objectid when using, or find out if there is an actual issue with session containg objectid or if its a seperate issue.
+        ### test having an objectid in session in different locations.
+
         return redirect(url_for('auth_bp.login'))
 
     else:

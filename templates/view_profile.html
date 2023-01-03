@@ -12,11 +12,12 @@
         <ul class="user-stats">
           <li>Posts: 0</li>
           <li>Friends: 0</li>
-          <li>Followers: 0</li>
         </ul>
         <form action="/friends/add" method="POST">
           <input type="hidden" name="username" value="{{ user['username'] }}">
-          <input type="submit" class="button-add-friend" value="Add Friend">
+          {% if (is_friends) or (current_user != user) %}
+            <input type="submit" class="button-add-friend" value="Add as Friend">
+          {% endif %}
         </form>
     </div>
 
