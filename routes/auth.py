@@ -6,15 +6,13 @@ import bcrypt
 auth_bp = Blueprint('auth_bp', __name__, template_folder='templates')
 
 @auth_bp.route('/signup', methods=['GET'])
+@logged_out_required
 def signup():
     return render_template('signup.html')
 
 @auth_bp.route('/login', methods=['GET'])
+@logged_out_required
 def login():
-    if is_authenticated():
-        flash('Signed in')
-        return redirect(url_for('explore'))
-
     return render_template('login.html')
 
 @auth_bp.route('/logout', methods=['GET'])
@@ -39,24 +37,23 @@ def create_user():
     return redirect(url_for('users_bp.view_profile', username=user['username']))
 
 @auth_bp.route('/authenticate', methods=['POST'])
+@logged_out_required
 def authenticate():
-    if is_authenticated():
-        return redirect(url_for('explore'))
-
     username = request.form['username']
     password = request.form['password']
 
     user = db.users.find_one({'username': username})
 
     if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
-        del user['password']
-        user['_id'] = str(user['_id'])
-        session['current_user'] = user
+        session['current_user'] = {
+            'name'    : user['name'],
+            'email'   : user['email'],
+            'username': user['username'],
+            '_id'     : str(user['_id']),
+        }
 
-        ### 1:40 am. Need to convert objectid to string and convert string back to objectid when using, or find out if there is an actual issue with session containg objectid or if its a seperate issue.
-        ### test having an objectid in session in different locations.
-
-        return redirect(url_for('auth_bp.login'))
+        flash('Signed in')
+        return redirect(url_for('explore'))
 
     else:
         flash('The password you’ve entered is incorrect.')

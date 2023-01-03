@@ -8,9 +8,6 @@ users_bp = Blueprint('users_bp', __name__, template_folder='templates')
 @users_bp.route('/<username>', methods=['GET'])
 @login_required
 def view_profile(username):
-    if not is_authenticated():
-        return redirect(url_for('auth_bp.login'))
-
     current_user = get_current_user()
     user = db.users.find_one({'username': username})
 
@@ -26,11 +23,9 @@ def view_profile(username):
                                            error_message=f'{username.capitalize()} Not Found')
 
 @users_bp.route('/post', methods=['POST'])
+@login_required
 # TODO: add coordinates to post data
 def submit_post():
-    if not is_authenticated():
-        return redirect(url_for('auth_bp.login'))
-
     current_user = db.users.find_one({'username': session['username']})
 
     post = dict(user_id=current_user['_id'], message=request.form['message'],

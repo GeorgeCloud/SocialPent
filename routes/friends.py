@@ -29,29 +29,26 @@ def create_friend_request():
 @friends_bp.route('/requests', methods=['GET'])
 @login_required
 def view_friend_requests():
-    if is_authenticated():
-        current_user = get_current_user()
+    current_user = get_current_user()
 
-        # Check if broken after change
-        current_user['_id'] = ObjectId(current_user['_id'])
+    # Check if broken after change
+    current_user['_id'] = ObjectId(current_user['_id'])
 
-        requests_sent = db.friend_requests.find({
-                            'sender': current_user['_id']})
+    requests_sent = db.friend_requests.find({
+                        'sender': current_user['_id']})
 
-        sent = [(db.users.find_one({'_id': r['receiver']})['username'],
-                (datetime.now() - r['created_on']).days) for r in requests_sent]
+    sent = [(db.users.find_one({'_id': r['receiver']})['username'],
+            (datetime.now() - r['created_on']).days) for r in requests_sent]
 
-        requests_received = db.friend_requests.find({
-                            'receiver': current_user['_id']})
+    requests_received = db.friend_requests.find({
+                        'receiver': current_user['_id']})
 
-        received = [(db.users.find_one({'_id': r['sender']})['username'],
-                (datetime.now() - r['created_on']).days) for r in requests_received]
+    received = [(db.users.find_one({'_id': r['sender']})['username'],
+            (datetime.now() - r['created_on']).days) for r in requests_received]
 
-        return render_template('friend_requests.html', requests_sent=sent,
-                                                       requests_received=received,
-                                                       current_user=current_user)
-
-    return redirect(url_for('auth_bp.login'))
+    return render_template('friend_requests.html', requests_sent=sent,
+                                                   requests_received=received,
+                                                   current_user=current_user)
 
 @friends_bp.route('/requests/accept', methods=['POST'])
 def accept_friend_request():

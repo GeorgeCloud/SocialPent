@@ -15,7 +15,7 @@
         </ul>
         <form action="/friends/add" method="POST">
           <input type="hidden" name="username" value="{{ user['username'] }}">
-          {% if (is_friends) or (current_user != user) %}
+          {% if is_friends %}
             <input type="submit" class="button-add-friend" value="Add as Friend">
           {% endif %}
         </form>
