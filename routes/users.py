@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, request
+from datetime import datetime
 from extensions import *
 from db import db
 import bcrypt
@@ -26,7 +27,7 @@ def view_profile(username):
 @users_bp.route('/<username>/post', methods=['POST'])
 @login_required
 # TODO: add coordinates to post data
-# TODO: create route to edit/delete post
+# TODO: create edit/delete route for posts
 def create_post(username):
     current_user = get_current_user()
 

@@ -46,12 +46,12 @@
         </div>
       </div>
 
-      <form action="{{ url_for('users_bp.create_post', username=username) }}" method="POST" class="center">
+      <form action="{{ url_for('users_bp.create_post', username=current_user['username']) }}" method="POST" class="center">
           <label for="message"></label>
           <textarea name="message" placeholder="What are you thinking about?" cols="30" rows="5" autofocus></textarea>
         <br>
 
-        <input type="submit" class="submit-message">
+        <input type="submit" class="submit-message" value="Post">
       </form>
     </div>
 
