@@ -7,10 +7,6 @@ from db import db
 def get_current_user():
     return session.get('current_user')
 
-def is_authenticated():
-    """ Returns true if logged in else False """
-    return get_current_user()
-
 def current_user_is(username):
     """ Checks if current_user's username is value passed in """
     current_user = get_current_user()

@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <form action="/post" method="POST" class="center">
+      <form action="{{ url_for('users_bp.create_post', username=username) }}" method="POST" class="center">
           <label for="message"></label>
           <textarea name="message" placeholder="What are you thinking about?" cols="30" rows="5" autofocus></textarea>
         <br>
