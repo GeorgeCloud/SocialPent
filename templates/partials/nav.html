@@ -26,11 +26,11 @@
 </nav>
 
 <script>
-  const userform = document.getElementById('user-search');
+  const userSearchform = document.getElementById('user-search');
 
-  userform.addEventListener('submit', async (e)=> {
+  userSearchform.addEventListener('submit', async (e)=> {
       e.preventDefault();
-      const user = document.getElementById('username').value
-      window.location.href = `/u/${user}`
+      const username = document.getElementById('username').value
+      window.location.href = `/u/${username}`
   })
 </script>
