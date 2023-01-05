@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, request
+from helpers.sessions_helper import *
+from helpers.user_helper import *
 from datetime import datetime
-from extensions import *
 from db import db
 from bson import ObjectId
 import bcrypt
@@ -19,7 +20,9 @@ def view_profile(username):
         return render_template('view_profile.html', current_user=current_user,
                                                     user=user,
                                                     posts=user_posts,
-                                                    is_friends=is_friends(user))
+                                                    request_status=request_status(user),
+                                                    is_friends=is_friends(user),
+                                                    is_owner=current_user_is(user))
 
     else:
         return render_template('404.html', current_user=current_user,

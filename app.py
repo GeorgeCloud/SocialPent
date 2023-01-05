@@ -1,8 +1,11 @@
 from flask import render_template, request, url_for, redirect, flash, session, jsonify
-from extensions import *
+from helpers.sessions_helper import *
+from helpers.user_helper import *
 from datetime import datetime
 from db import db, app
 import requests
+
+# app ( flask instance ) is defined in db.py
 
 from routes.auth import auth_bp
 from routes.events import events_bp
@@ -19,10 +22,16 @@ app.register_blueprint(users_bp,   url_prefix='/u')
 def explore():
     current_user = get_current_user()
 
-    db_current_user = db.users.find_one({'username': current_user['username']})  # db_current_user has all db properties: friends, etc.
-    friends = db.users.find({'_id': {'$in': db_current_user['friends']}}).limit(5)
+    db_current_user = db.users.find_one({
+        'username': current_user['username']
+    })
 
-    return render_template('explore.html', friends=friends, current_user=db_current_user)
+    friends = db.users.find({
+        '_id': { '$in': db_current_user['friends'] }
+    }).limit(5)
+
+    return render_template('explore.html', friends=friends,
+                                           current_user=db_current_user)
 
 @app.route('/settings', methods=['GET'])
 def user_settings():

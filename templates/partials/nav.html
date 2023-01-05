@@ -1,7 +1,7 @@
 <nav>
   <div class="logo-and-name">
     <a href="/">
-      <img src="{{url_for('static', filename='images/icon.jpg')}}" alt="logo">
+      <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo">
       <h1 style="margin-left: 10px; margin-top: 2px;">SocialPent</h1>
     </a>
   </div>
@@ -16,7 +16,7 @@
   <ul class="nav-options">
     {% if current_user %}
       <li><a href="/">Explore</a></li>
-      <li><a href="/friends/requests">Requests</a></li>
+      <li><a href="{{ url_for('friends_bp.friend_requests') }}">Requests</a></li>
       <li><a class="hover-effect" href="{{ url_for('users_bp.view_profile', username=current_user['username']) }}">Profile</a></li>
       <li><a class="hover-effect" href="/logout">Logout</a></li>
     {% else %}

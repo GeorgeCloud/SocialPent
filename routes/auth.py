@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
-from extensions import *
+from helpers.sessions_helper import *
 from db import db
 import bcrypt
 
@@ -29,7 +29,8 @@ def create_user():
         'username': request.form['username'],
         'name': request.form['name'].title(),
         'email': request.form['email'],
-        'password': bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt()),
+        'password': bcrypt.hashpw(request.form['password'].encode('utf-8'),
+                                                         bcrypt.gensalt()),
         'friends': [],
     }
     db.users.insert_one(user)
