@@ -33,10 +33,19 @@
       </div>
 
       <form action="{{ url_for('users_bp.create_post', username=current_user['username']) }}" method="POST" class="center">
-          <label for="message"></label>
-          <textarea name="message" placeholder="What are you thinking about?" cols="30" rows="5" autofocus></textarea>
-        <br>
+        <label>Create post</label>
+        <!-- <label for="message"></label> -->
+        <div class="for-border-top">
+          <textarea name="message" placeholder="What are you thinking about?" cols="30" rows="5" autofocus required></textarea>
+        </div>
+        <div class="image-upload">
+          <label for="file-input">
+            <img src="{{ url_for('static', filename='/images/upload-icon.png') }}" width="200px">
+          </label>
 
+          <input id="file-input" type="file" />
+        </div>
+        <br>
         <input type="submit" class="submit-message" value="Post">
       </form>
     </div>
