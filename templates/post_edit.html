@@ -2,7 +2,7 @@
 
 {% block body %}
 <div>
-    <form method='POST' action='/{{ username }}/posts/{{ post._id }}'>
+    <form method='POST' action='{{ url_for('users_bp.update_post', username=username, post_id=post['_id']) }}'>
         <input type='hidden' name='_method' value='PUT'/>
         <h1>Edit post</h1>
         <div class="for-border-top">

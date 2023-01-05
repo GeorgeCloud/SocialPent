@@ -1,7 +1,7 @@
 {% extends 'partials/_base.html' %}
 
 {% block title %}
-{{ username }}
+{{ username }} | {{ post.message }}
 {% endblock %}
 
 {% block body %}
@@ -11,4 +11,9 @@
  <img src="{{ url_for('static', filename='images/profile-picture.png') }}" width="200px">
  {{ post.created_on }}
  <p><a href="{{ url_for('users_bp.edit_post', username=username, post_id=post['_id']) }}">Edit</a></p>
+ <p>
+    <form method='POST' action='{{ url_for('users_bp.delete_post', username=username, post_id=post['_id']) }}'>
+        <button type='submit'>Delete</button>
+    </form>
+</p>
 {% endblock %}
