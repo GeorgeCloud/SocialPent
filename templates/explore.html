@@ -6,23 +6,9 @@
   <!-- {% include 'partials/flash_messages.html' %} -->
 
   <div class="home-layout">
-    <div class="trending gd-content">
-      <h5>Trending</h5>
-      <p>#movies #sounds #color #youtube #apple #h&m</p>
-    </div>
-
-    <div class="friends gd-content">
-      <h5>Friends</h5>
-
-      {% for friend in friends %}
-        <div class="friend-container">
-          <img class="friend-profile-image" src="{{ url_for('static', filename='/images/profile_image.png') }}" alt="Friend Profile Picture">
-
-          <a href="/u/{{friend['username']}}">{{ friend['username'].capitalize() }}</a>
-
-          <img class="online-status" src="{{ url_for('static', filename='/images/green.png') }}" alt="">
-        </div>
-      {% endfor %}
+    <div class="events gd-content" style="overflow: scroll">
+      <h5>Events</h5>
+      <p>events here....</p>
     </div>
 
     <div class="map gd-content">
@@ -55,7 +41,10 @@
       </form>
     </div>
 
-    <div class="activity gd-content"><h5>Activity</h5></div>
+    <div class="activity gd-content">
+      <h5>Trending</h5>
+      <p>#movies #sounds #color #youtube #apple #h&m</p>
+    </div>
   </div>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFvCBTC4gncWVqiOHfjbPWRQsmI9DXFP4&libraries="></script>

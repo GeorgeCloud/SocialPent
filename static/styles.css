@@ -1,4 +1,8 @@
-* { padding: 0; margin: 0;}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 ul {
     list-style:none;
@@ -32,7 +36,7 @@ nav {
     display: flex;
     background-color: rgb(255, 255, 255);
     padding: 10px;
-    height: 3.5vh;
+    height: 5vh;
     width: 98.8vw;
 }
 
@@ -61,24 +65,31 @@ nav {
     grid-gap: 3vh;
     grid-column: column;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas: "nav      nav nav nav"
-                         "trending map map post"
-                         "friends  map map activity";
+    grid-template-areas: "nav    nav nav nav"
+                         "events map map post"
+                         "events map map activity";
     margin-bottom: 3vh;
 }
 
-.trending {
+.events {
+    grid-area: events;
+    margin-left: 1vw;
+    min-height: 80vh;
+    max-height: 80vh;
+}
+
+/* .trending {
     grid-area: trending;
     border: solid 1px;
     margin-left: 1vw;
     height: 37vh;
-}
+} */
 
-.left-trending {
+/* .left-trending {
     width: 50%;
     height: 90%;
     background-color: lightsteelblue;
-}
+} */
 
 /*.right-trending {*/
 /*    width: 50%;*/
@@ -86,19 +97,18 @@ nav {
 /*    background-color: lightgrey;*/
 /*}*/
 
-.friends {
+/* .friends {
     grid-area: friends;
     border: solid 1px;
     margin-left: 1vw;
     height: 37vh;
-}
+} */
 
 .friend-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 50px;
-    border: solid black 1px;
     margin-bottom: 5px;
 }
 
@@ -115,8 +125,8 @@ nav {
 
 .map {
     grid-area: map;
-    height: 80vh;
-    border: solid 1px;
+    min-height: 80vh;
+    max-height: 80vh;
     /* background-image: url("/static/images/map.png"); */
     background-size: cover;
     background-position: center;
@@ -124,26 +134,23 @@ nav {
 
 .post {
     grid-area: post;
-    border: solid 1px;
-    width: 91%;
-    height: 95%;
-    padding: 10px;
+    margin-right: 1vw;
+    min-height: 37vh;
+    max-height: 37vh;
     display: flex;
 }
 
 .activity {
     grid-area: activity;
-    border: solid 1px;
-    height: 37vh;
-    width: 97%;
+    min-height: 40vh;
+    max-height: 40vh;
+    margin-right: 1vw;
 }
 
 .profile-image-explore {
     height: 130px;
     width: 130px;
 }
-
-
 
 a:link {
   color: black;
@@ -160,15 +167,6 @@ a:link {
     background-color: black;
     padding: 10px;
     text-decoration: underline;
-}
-
-
-.logo-and-name a {
-    display: flex;
-    flex-direction: row;
-    margin-right: 100px;
-    text-decoration: none;
-    margin-left: 15%;
 }
 
 .single-post {
@@ -195,6 +193,10 @@ a:link {
 
 .gd-content {
     background-color: rgb(255, 255, 255);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 7px;
+    /* border: solid .1px rgb(26, 38, 58); */
+    padding: 10px;
 }
 
 
@@ -206,17 +208,28 @@ a:link {
     margin-right: 10px;
 }
 
+.logo-and-name a {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    margin-right: 100px;
+    margin-left: 15%;
+}
+
 .logo-and-name img {
     height: 30px;
     width: 30px;
+    padding: 0px;
+}
+
+.logo-and-name h1 {
+  color: rgb(123,	114, 98);
 }
 
 .left-content {
     display: flex;
     flex-direction: column;
     color: white;
-    /*background-color: lightblue;*/
-    /* site height - nav height */
     height: calc(100vh - 20vh - 3.5vh - 20px);
     width: 50vw;
     padding-top: 20vh;
