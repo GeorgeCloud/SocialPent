@@ -1,26 +1,24 @@
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
+from helpers.sessions_helper import *
+from helpers.user_helper import *
 from datetime import datetime
-from extensions import *
-from db import db
-
 from bson import ObjectId
+from db import db
 
 friends_bp = Blueprint('friends_bp', __name__, template_folder='templates')
 
-@friends_bp.route('/add', methods=['POST'])
-# TODO: Handle accepting friend request before sending one.
+@friends_bp.route('/create', methods=['POST'])
 def create_friend_request():
     current_user = get_current_user()
     session['current_user']['_id'] = ObjectId(current_user['_id'])
     user = db.users.find_one({'username': request.form['username']})
 
-    if (user) and (user != current_user):
+    if not current_user_is(user):
         key = {'sender': current_user['_id'], 'receiver': user['_id']}
 
-        data = {'$set': {
-                    'sender'    : current_user['_id'],
-                    'receiver'  : user['_id'],
-                    'created_on': datetime.now()}}
+        data = {'$set': {'sender'    : current_user['_id'],
+                         'receiver'  : user['_id'],
+                         'created_on': datetime.now()}}
 
         db.friend_requests.update_one(key, data, upsert=True)
 
@@ -28,10 +26,9 @@ def create_friend_request():
 
 @friends_bp.route('/requests', methods=['GET'])
 @login_required
-def view_friend_requests():
+def friend_requests():
     current_user = get_current_user()
 
-    # Check if broken after change
     current_user['_id'] = ObjectId(current_user['_id'])
 
     requests_sent = db.friend_requests.find({
@@ -64,26 +61,21 @@ def accept_friend_request():
     if friend_request:
         db.friend_requests.delete_one(friend_request)
 
-        db.users.update_one(
-            current_user,
-            {'$addToSet': {'friends': user['_id']}})
+        db.users.update_one(current_user, {'$addToSet': {'friends': user['_id']}})
 
-        db.users.update_one(
-            user,
-            {'$addToSet': {'friends': current_user['_id']}})
+        db.users.update_one(user, {'$addToSet': {'friends': current_user['_id']}})
 
-    return redirect(url_for('friends_bp.view_friend_requests'))  # Flash message if no user / request
+    return redirect(url_for('friends_bp.friend_requests'))  # Flash message if no user / request
 
 @friends_bp.route('/requests/delete', methods=['POST'])
 def delete_friend_request():
     current_user = get_current_user()
-    current_user['_id'] = ObjectId(current_user['_id'])
 
     user = db.users.find_one({'username': request.form['username']})
 
     db.friend_requests.delete_one({
-        'sender': current_user['_id'],
+        'sender': ObjectId(current_user['_id']),
         'receiver': user['_id']
     })
 
-    return redirect(url_for('friends_bp.view_friend_requests'))
+    return redirect(request.referrer)

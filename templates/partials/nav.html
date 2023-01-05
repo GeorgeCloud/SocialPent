@@ -16,7 +16,7 @@
   <ul class="nav-options">
     {% if current_user %}
       <li><a href="/">Explore</a></li>
-      <li><a href="/friends/requests">Requests</a></li>
+      <li><a href="{{ url_for('friends_bp.friend_requests') }}">Requests</a></li>
       <li><a class="hover-effect" href="{{ url_for('users_bp.view_profile', username=current_user['username']) }}">Profile</a></li>
       <li><a class="hover-effect" href="/logout">Logout</a></li>
     {% else %}

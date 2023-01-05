@@ -14,19 +14,31 @@
           <li>Posts: 0</li>
           <li>Friends: 0</li>
         </ul>
-        <form action="/friends/add" method="POST">
-          <input type="hidden" name="username" value="{{ user['username'] }}">
-          <!-- Don't show if friend-request was already sent -->
-          {% if not is_friends %}
-            <input type="submit" class="button-add-friend" value="Add as Friend">
+        <!-- Don't show if friend-request was already sent -->
+        {% if (not is_owner) and (not is_friends) %}
+          {% if request_status == 'pending' %}
+            <form action="{{ url_for('friends_bp.delete_friend_request') }}" method="POST">
+              <input type="hidden" name="username" value="{{ user['username'] }}">
+              <input type="submit" class="button-add-friend" value="Cancel Request">
+            </form>
+          {% elif request_status == 'incoming' %}
+            <form action="{{ url_for('friends_bp.create_friend_request') }}" method="POST">
+              <input type="hidden" name="username" value="{{ user['username'] }}">
+              <input type="submit" class="button-add-friend" value="Accept Request">
+            </form>
+          {% else %}
+            <form action="{{ url_for('friends_bp.create_friend_request') }}" method="POST">
+              <input type="hidden" name="username" value="{{ user['username'] }}">
+              <input type="submit" class="button-add-friend" value="Add as Friend">
+            </form>
           {% endif %}
-        </form>
+        {% endif %}
     </div>
 
     <div class="posts">
       {% for post in posts %}
           <div class="single-post">
-            <h5>{{post['message']}}</h5>
+            <h5>{{ post['message'] }}</h5>
             <hr>
             <p>1 day ago</p>
           </div>
