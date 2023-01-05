@@ -1,0 +1,14 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+{{ username }}
+{% endblock %}
+
+{% block body %}
+<a href="{{ url_for('users_bp.view_profile', username=username) }}">Back Home</a>
+ <p>message</p>
+ {{ post.message }}
+ <img src="{{ url_for('static', filename='images/profile-picture.png') }}" width="200px">
+ {{ post.created_on }}
+ <p><a href="{{ url_for('users_bp.edit_post', username=username, post_id=post['_id']) }}">Edit</a></p>
+{% endblock %}

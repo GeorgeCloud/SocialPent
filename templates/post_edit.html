@@ -1,0 +1,26 @@
+{% extends 'partials/_base.html' %}
+
+{% block body %}
+<div>
+    <form method='POST' action='/{{ username }}/posts/{{ post._id }}'>
+        <input type='hidden' name='_method' value='PUT'/>
+        <h1>Edit post</h1>
+        <div class="for-border-top">
+            <img src="{{ url_for('static', filename='images/profile-picture.png') }}" width="200px">
+            <textarea name="message" cols="30" rows="5" autofocus required>{{ post.message }}</textarea>
+        </div>
+        <div class="image-upload">
+        <label for="file-input">
+            <img src="{{ url_for('static', filename='/images/upload-icon.png') }}" width="200px">
+        </label>
+
+        <input id="file-input" type="file" />
+        </div>
+        <br>
+        <div>
+            <button type='submit'>Save Post</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
