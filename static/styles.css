@@ -35,11 +35,10 @@ a:visited {
 
 .account-request {
     display: flex;
-    flex-direction: column;
-    padding: 5px;
-    height: 25vh;
-    width: 15vw;
-    border: solid black 1px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    height: 5vh;
+    width: 100vw;
 }
 
 .account-request img {
@@ -211,6 +210,15 @@ a:visited {
     margin-bottom: 5px;
 }
 
+.flex-posts {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 95vh;
+    overflow: scroll;
+}
+
 .for-border-top {
     border-top: solid;
     border-color: gray;
@@ -278,7 +286,7 @@ nav {
     background-color: rgb(255, 255, 255);
     padding: 10px;
     height: 5vh;
-    width: 98.8vw;
+    width: 100vw;
 }
 
 .nav-options {
@@ -337,6 +345,14 @@ nav {
     display: flex;
 }
 
+.posts {
+    display: grid;
+    gap: 2.5em;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
 .padding-20 {
     padding: 20px;
 }
@@ -347,24 +363,26 @@ nav {
   margin-right: 5px;
 }
 
-.posts {
-    display: flex;
-    flex-direction: row;
-    max-width: 60vw;
-    min-width: 60vw;
-    padding: 20px;
-    overflow: scroll;
-}
-
 .profile-image-explore {
     height: 130px;
     width: 130px;
 }
 
 .single-post {
-  background-color: lightblue;
-  height: 15vw;
-  width: 15vw;
+  border: solid;
+  border-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.posts img:hover {
+    opacity: .5;
+}
+
+.single-post img{
+    height: 13vw;
+    width: 13vw;
 }
 
 .sml-text {
