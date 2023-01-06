@@ -161,11 +161,38 @@ a:visited {
   margin-right: 20px;
 }
 
+.event-title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.event-venue-name {
+  font-size: 15px;
+}
+
+.event-date {
+  font-size: 15px;
+}
+
+.event-price {
+  font-size: 12px;
+}
+
 .events {
     grid-area: events;
     margin-left: 1vw;
     min-height: 80vh;
     max-height: 80vh;
+}
+
+.events-overflow {
+  min-height: 95%;
+  max-height: 95%;
+  overflow: scroll;
+}
+
+#events-header {
+  background-color: white;
 }
 
 .first-name-field {
@@ -213,6 +240,10 @@ textarea {
 
 .mt {
     margin-top: 3px;
+}
+
+.mt-2 {
+    margin-top: 2px;
 }
 
 .mt-5 {
@@ -322,6 +353,7 @@ nav {
     max-width: 60vw;
     min-width: 60vw;
     padding: 20px;
+    overflow: scroll;
 }
 
 .profile-image-explore {
