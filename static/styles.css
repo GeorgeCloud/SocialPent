@@ -37,7 +37,7 @@ nav {
     background-color: rgb(255, 255, 255);
     padding: 10px;
     height: 5vh;
-    width: 98.8vw;
+    width: 100vw;
 }
 
 .nav-options {
@@ -170,9 +170,20 @@ a:link {
 }
 
 .single-post {
-  background-color: lightblue;
-  height: 15vw;
-  width: 15vw;
+  border: solid;
+  border-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.posts img:hover {
+    opacity: .5;
+}
+
+.single-post img{
+    height: 13vw;
+    width: 13vw;
 }
 
 .sml-text {
@@ -485,13 +496,33 @@ a:link {
 .padding-20 {
     padding: 20px;
 }
-
+/* 
 .posts {
     display: flex;
     flex-direction: row;
     max-width: 60vw;
     min-width: 60vw;
     padding: 20px;
+} */
+
+.flex-posts {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 95vh;
+    overflow: scroll;
+    /* overflow: scroll; */
+}
+
+.posts {
+    display: grid;
+    gap: 2.5em;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    /* grid-template-areas:
+        "for-grid"; */
 }
 
 hr {
