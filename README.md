@@ -19,3 +19,4 @@ TODO
   - [ ] Normalize Event Data Coordinates and user's coordinates (This will bring down our number of API requests - max 5000 API calls per day)
   - [ ] Track words within event data by creating a table; Trending words(24hrs)
   - [ ] Implement backend workers to handle online/offline user status
+  - [ ] Add notifications, background worker
