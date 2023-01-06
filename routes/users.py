@@ -68,7 +68,7 @@ def update_post(username, post_id):
         'message'    : request.form['message']
     }
     db.posts.update_one(
-        {'_id': ObjectId(post_id)}, 
+        {'_id': ObjectId(post_id)},
         {'$set': updated_post})
     return redirect(url_for('users_bp.view_post', username=username, post_id=post_id, current_user=current_user))
 

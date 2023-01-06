@@ -11,6 +11,15 @@ body {
 a:link {
   color: black;
   background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: black;
 }
 
 .account-form {
@@ -83,6 +92,12 @@ a:link {
     height: 100%;
 }
 
+#copyright-text {
+  display: flex;
+  justify-content: flex-end;
+  color: rgb(106, 106, 106);
+  margin-right: 10px;
+}
 
 .create-account-text {
     color: grey;
@@ -129,6 +144,21 @@ a:link {
 
 .close-button:hover {
     color: black;
+}
+
+.event {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 10px;
+  margin: 20px 0px;
+  padding: 10px;
+}
+
+.event-thumbnail {
+  min-width: 150px;
+  max-width: 150px;
+  min-height: 100px;
+  max-height: 100px;
+  margin-right: 20px;
 }
 
 .events {
@@ -179,6 +209,18 @@ textarea {
     /* background-image: url("/static/images/map.png"); */
     background-size: cover;
     background-position: center;
+}
+
+.mt {
+    margin-top: 3px;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mt-10 {
+    margin-top: 10px;
 }
 
 .ml-10 {
@@ -266,6 +308,12 @@ nav {
 
 .padding-20 {
     padding: 20px;
+}
+
+.pin-logo {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
 }
 
 .posts {
@@ -393,7 +441,9 @@ li {
 }
 
 .logo-and-name h1 {
-  color: rgb(123,	114, 98);
+  /* color: rgb(123,	114, 98); */
+  color: rgb(26, 38, 58);
+
 }
 
 .to-flex {

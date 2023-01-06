@@ -1,0 +1,27 @@
+<a href="{{ event.url }}">
+  <div class="event side-by-side">
+    <img class="event-thumbnail" src="{{ event.image_path }}" alt="">
+    <div>
+      <b>{{ event.name }}</b>
+
+      <div class="side-by-side mt">
+        <img class="pin-logo" src="{{ url_for('static', filename='/images/pin-icon.png') }}" alt="Pin Logo">
+        <p>{{ event.venue_name }}</p>
+      </div>
+
+      {% if event.date %}
+        <div class="side-by-side mt">
+          <img class="pin-logo" src="{{ url_for('static', filename='/images/date-icon.png') }}" alt="Pin Logo">
+          <p>{{ event.date }}</p>
+        </div>
+      {% endif %}
+
+      {% if event.price %}
+        <div class="side-by-side mt">
+          <img class="pin-logo" src="{{ url_for('static', filename='/images/price-icon.png') }}" alt="Pin Logo">
+          <p>${{ event.price['min'] }}0 - ${{ event.price['max'] }}0</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</a>

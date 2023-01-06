@@ -8,16 +8,9 @@
   <div class="home-layout">
     <div class="events gd-content" style="overflow: scroll">
       <h5>Events</h5>
-
-      <div class="event side-by-side">
-        <img src="../static/images/map.png" style="height: 20px;" alt="">
-
-        <div class="">
-          <p>title</p>
-          <p>date</p>
-          <p>description</p>
-        </div>
-      </div>
+      {% for event in events %}
+        {% include 'partials/event_card.html' %}
+      {% endfor %}
     </div>
 
     <div class="map gd-content">
@@ -64,6 +57,8 @@
       <p>#movies #sounds #color #youtube #apple #h&m</p>
     </div>
   </div>
+
+  <p id="copyright-text">Copyright © 2023 by George Ceja. All rights reserved.</p>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFvCBTC4gncWVqiOHfjbPWRQsmI9DXFP4&libraries="></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
