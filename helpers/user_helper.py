@@ -6,7 +6,7 @@ def get_current_user():
     """Returns current_user from session."""
     return session.get('current_user')
 
-def _get_db_current_user():
+def get_db_current_user():
     """Returns current_user from db."""
     current_user_id = session.get('current_user')['_id']
 
@@ -19,7 +19,7 @@ def current_user_is(user):
 
 def is_friends(user):
     """Returns true if current_user is friends with passed in user instance."""
-    db_current_user = _get_db_current_user()
+    db_current_user = get_db_current_user()
 
     return user['_id'] in db_current_user['friends']
 

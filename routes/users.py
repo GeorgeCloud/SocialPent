@@ -64,7 +64,7 @@ def view_post(username, post_id):
     current_user = get_current_user()
     # Ensure post_id belongs to username
     post = db.posts.find_one({'_id': ObjectId(post_id)})
-    return render_template('show_post.html', username=username, post=post, current_user=current_user)
+    return render_template('post_show.html', username=username, post=post, current_user=current_user)
 
 @users_bp.route('/<username>/posts/<post_id>/edit', methods=['GET'])
 @login_required

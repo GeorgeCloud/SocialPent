@@ -35,15 +35,16 @@ a:visited {
 
 .account-request {
     display: flex;
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
     padding: 10px;
     height: 5vh;
-    width: 100vw;
+    width: 100%;
+    border: solid 1px rgb(255, 255, 255);
 }
 
 .account-request img {
     height: 70%;
-    width: 100%;
+    width: 10%;
 }
 
 .account-request h2 {
@@ -454,26 +455,19 @@ hr {
     display: none;
 }
 
-#form-upload-label
+#form-upload-label {
 
-/* .image-upload img {
-    height: 25px;
-    width: 50px
-} */
+}
 
-/* .image-upload {
-    margin-left: 80%;
-} */
-
-/* .image-upload label {
-    padding: 0;
-} */
+.indv-friend-container {
+  border: solid black 1px;
+}
 
 .left-content {
     display: flex;
     flex-direction: column;
     color: white;
-    height: calc(100vh - 20vh - 3.5vh - 20px);
+    height: calc(100vh - 3.5vh - 20px);
     width: 50vw;
     padding-top: 20vh;
     padding-left: 50px;
@@ -537,7 +531,6 @@ ul {
 }
 
 .user-stats {
-    border: solid black 1px;
 }
 
 .submit-message {
@@ -552,26 +545,15 @@ ul {
     background-color: rgb(235, 231, 231);
 }
 
-.received-section {
-    height: 100vh;
-    width: 50vw;
-    padding: 50px;
-    background-color: lightsteelblue;
-    /*background-color: lightblue;*/
-}
-
 .request-content-container {
-    display: flex;
-    flex-direction: row;
     border: solid black 1px;
     padding: 25px;
-    height: 90vh;
+    height: 35vh;
 }
 
 .request-content-container input {
     padding: 2px;
 }
-
 
 .side-by-side {
     display: flex;
@@ -582,8 +564,6 @@ ul {
     height: 100vh;
     width: 50vw;
     padding: 50px;
-    background-color: lightgoldenrodyellow;
-    /*background-color: rgb(255, 205, 61);*/
 }
 
 .w35 {
@@ -616,6 +596,13 @@ ul {
 #for-back-button {
     width: 45px;
     margin: 27px 0px 0px 35px;
+}
+
+.friends-container {
+  height: 100vh;
+  width: 50vw;
+  padding: 50px;
+  background-color: lightsteelblue;
 }
 
 .card-outter {
@@ -733,9 +720,9 @@ ul {
 }
 
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 900px) {
+/* @media only screen and (max-width: 900px) { */
   /* styles here only apply when MAX width is 600px */
-  body {
+  /* body {
     background-color: red;
   }
-}
+} */

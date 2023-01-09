@@ -26,14 +26,9 @@ def explore():
         'username': current_user['username']
     })
 
-    friends = db.users.find({
-        '_id': { '$in': db_current_user['friends'] }
-    }).limit(5)
-
     events = db.events.find({}).limit(20)
 
-    return render_template('explore.html', friends=friends,
-                                           current_user=db_current_user,
+    return render_template('explore.html', current_user=db_current_user,
                                            events=events)
 
 @app.route('/settings', methods=['GET'])
