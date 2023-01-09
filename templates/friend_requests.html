@@ -28,7 +28,7 @@
         <h2 class="friend-request-receive-header">Friend Requests Received</h2>
         <div class="request-content-container">
           {% for request in requests_received %}
-            <a class="no-underline" href="{{ url_for('users_bp.view_profile', username=friend[0]) }}">
+            <a class="no-underline" href="{{ url_for('users_bp.view_profile', username=request[0]) }}">
               <form action="/friends/requests/accept" method="POST">
                 <input type="hidden" name="username" value="{{request[0]}}">
                 <div class="account-request">
