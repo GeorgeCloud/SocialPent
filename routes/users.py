@@ -8,6 +8,20 @@ import bcrypt
 
 users_bp = Blueprint('users_bp', __name__, template_folder='templates')
 
+@users_bp.route('', methods=['POST'])
+def create_user():
+    user = {
+        'username': request.form['username'],
+        'name': request.form['name'].title(),
+        'email': request.form['email'],
+        'password': bcrypt.hashpw(request.form['password'].encode('utf-8'),
+                                                         bcrypt.gensalt()),
+        'friends': [],
+    }
+    db.users.insert_one(user)
+
+    return redirect(url_for('users_bp.view_profile', username=user['username']))
+
 @users_bp.route('/<username>', methods=['GET'])
 @login_required
 # TODO: Add bio to user profile, add column to user model

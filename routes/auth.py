@@ -23,20 +23,6 @@ def logout():
 
     return redirect(url_for('auth_bp.login'))
 
-@auth_bp.route('/new-user', methods=['POST'])
-def create_user():
-    user = {
-        'username': request.form['username'],
-        'name': request.form['name'].title(),
-        'email': request.form['email'],
-        'password': bcrypt.hashpw(request.form['password'].encode('utf-8'),
-                                                         bcrypt.gensalt()),
-        'friends': [],
-    }
-    db.users.insert_one(user)
-
-    return redirect(url_for('users_bp.view_profile', username=user['username']))
-
 @auth_bp.route('/authenticate', methods=['POST'])
 @logged_out_required
 def authenticate():

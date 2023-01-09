@@ -1,0 +1,7 @@
+{% macro nav_link(endpoint, text) %}
+  <li><a href="{{ url_for(endpoint) }}">{{ text }}</a></li>
+{% endmacro %}
+
+{% macro nav_link_w_params() %}
+  <li><a href="{{ url_for(endpoint=kwargs['endpoint'], username=kwargs['username']) }}">{{ kwargs['text'] }}</a></li>
+{% endmacro %}

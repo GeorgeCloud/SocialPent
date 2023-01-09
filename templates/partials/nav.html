@@ -1,3 +1,6 @@
+{% from "partials/macros.html" import nav_link with context %}
+{% from "partials/macros.html" import nav_link_w_params with context %}
+
 <nav>
   <div class="logo-and-name">
     <a href="/">
@@ -15,12 +18,12 @@
 
   <ul class="nav-options">
     {% if current_user %}
-      <li><a href="/">Explore</a></li>
-      <li><a href="{{ url_for('friends_bp.friend_requests') }}">Requests</a></li>
-      <li><a class="hover-effect" href="{{ url_for('users_bp.view_profile', username=current_user['username']) }}">Profile</a></li>
-      <li><a class="hover-effect" href="/logout">Logout</a></li>
+      {{ nav_link("explore", "Explore") }}
+      {{ nav_link("friends_bp.friend_requests", "Requests") }}
+      {{ nav_link_w_params(endpoint="users_bp.view_profile", text="Profile", username=current_user['username']) }}
+      {{ nav_link("auth_bp.logout", "Logout") }}
     {% else %}
-      <li><a class="hover-effect" href="/login">Login</a></li>
+      {{ nav_link("auth_bp.login", "Login") }}
     {% endif %}
   </ul>
 </nav>

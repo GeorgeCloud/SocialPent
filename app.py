@@ -30,7 +30,7 @@ def explore():
         '_id': { '$in': db_current_user['friends'] }
     }).limit(5)
 
-    events = db.events.find({}).limit(10)
+    events = db.events.find({}).limit(20)
 
     return render_template('explore.html', friends=friends,
                                            current_user=db_current_user,
