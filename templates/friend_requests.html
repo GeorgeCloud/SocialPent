@@ -9,6 +9,7 @@
       <div class="friends-container">
         <h2 class="friend-request-receive-header">Friends</h2>
         {% for friend in friends %}
+        <a href="{{ url_for('users_bp.view_profile', username=friend['username']) }}" class="no-underline">
           <div class="indv-friend-container">
             <img id="profile-picture2" src="{{ url_for('static', filename='images/profile-picture.png') }}" alt="">
             <div id="flex-user-email">
@@ -17,6 +18,7 @@
               <p class="username-email"><b>Email:</b> {{ friend['email'] }}</p>
             </div>
           </div>
+        </a>
         {% endfor %}
       </div>
     </div>
@@ -26,15 +28,17 @@
         <h2 class="friend-request-receive-header">Friend Requests Received</h2>
         <div class="request-content-container">
           {% for request in requests_received %}
-            <form action="/friends/requests/accept" method="POST">
-              <input type="hidden" name="username" value="{{request[0]}}">
-              <div class="account-request">
-                <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
-                <h2>{{ request[0] }}</h2>
-                <p><b>Sent Today</b></p>
-                <input id="style-cancel-btn" type="submit" value="ACCEPT">
-              </div>
-            </form>
+            <a class="no-underline" href="{{ url_for('users_bp.view_profile', username=friend[0]) }}">
+              <form action="/friends/requests/accept" method="POST">
+                <input type="hidden" name="username" value="{{request[0]}}">
+                <div class="account-request">
+                  <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
+                  <h2>{{ request[0] }}</h2>
+                  <p><b>Sent Today</b></p>
+                  <input id="style-cancel-btn" type="submit" value="ACCEPT">
+                </div>
+              </form>
+            </a>
           {% endfor %}
         </div>
       </div>
@@ -43,15 +47,17 @@
         <h2 class="friend-request-receive-header" id="friend-request-p">Friend Requests Sent</h2>
         <div class="request-content-container">
           {% for request in requests_sent %}
-            <form action="/friends/requests/delete" method="POST">
-              <input type="hidden" name="username" value="{{request[0]}}">
-              <div class="account-request">
-                <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
-                <h2>{{ request[0].capitalize() }}</h2>
-                <p><b>Sent Today</b></p>
-                <input id="style-cancel-btn" type="submit" value="CANCEL">
-              </div>
-            </form>
+            <a class="no-underline" href="{{ url_for('users_bp.view_profile', username=request[0]) }}">
+              <form action="/friends/requests/delete" method="POST">
+                <input type="hidden" name="username" value="{{request[0]}}">
+                <div class="account-request">
+                  <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
+                  <h2>{{ request[0].capitalize() }}</h2>
+                  <p><b>Sent Today</b></p>
+                  <input id="style-cancel-btn" type="submit" value="CANCEL">
+                </div>
+              </form>
+            </a>
           {% endfor %}
         </div>
       </div>
