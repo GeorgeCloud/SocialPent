@@ -37,7 +37,7 @@ def create_post(username):
     post = {
             'user_id'    : ObjectId(current_user['_id']),
             'message'    : request.form['message'],
-            'created_on' : datetime.now()
+            'created_on' : datetime.now().strftime('%B %d, %Y')
     }
 
     db.posts.insert_one(post)
