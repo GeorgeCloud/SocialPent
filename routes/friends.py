@@ -7,7 +7,11 @@ from db import db
 
 friends_bp = Blueprint('friends_bp', __name__, template_folder='templates')
 
-@friends_bp.route('/create', methods=['POST'])
+@friends_bp.route('/delete', methods=['DELETE'])
+def delete_friend():
+    pass
+
+@friends_bp.route('requests/create', methods=['POST'])
 def create_friend_request():
     current_user = get_current_user()
     session['current_user']['_id'] = ObjectId(current_user['_id'])

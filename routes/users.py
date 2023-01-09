@@ -31,9 +31,11 @@ def view_profile(username):
 
     if user:
         user_posts = db.posts.find({'user_id': user['_id']})
+        user_posts_cnt = db.posts.count_documents({'user_id': user['_id']})
         return render_template('view_profile.html', current_user=current_user,
                                                     user=user,
                                                     posts=user_posts,
+                                                    posts_cnt=user_posts_cnt,
                                                     request_status=request_status(user),
                                                     is_friends=is_friends(user),
                                                     is_owner=current_user_is(user))

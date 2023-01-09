@@ -14,8 +14,8 @@
 
       <!-- get count for friends and posts -->
       <ul class="">
-        <li>Posts: 0</li>
-        <li>Friends: 0</li>
+        <li>Posts: {{ posts_cnt }}</li>
+        <li>Friends: {{ user.friends|length }}</li>
       </ul>
 
       {% if (not is_owner) and (not is_friends) %}
