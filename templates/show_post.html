@@ -5,15 +5,54 @@
 {% endblock %}
 
 {% block body %}
-<a href="{{ url_for('users_bp.view_profile', username=username) }}">Back Home</a>
- <p>message</p>
- {{ post.message }}
- <img src="{{ url_for('static', filename='images/profile-picture.png') }}" width="200px">
- {{ post.created_on }}
- <p><a href="{{ url_for('users_bp.edit_post', username=username, post_id=post['_id']) }}">Edit</a></p>
- <p>
-    <form method='POST' action='{{ url_for('users_bp.delete_post', username=username, post_id=post['_id']) }}'>
-        <button type='submit'>Delete</button>
-    </form>
-</p>
+<div class="side-by-side">
+    <div class="w35 padding-20">
+        <img id="profile-picture" src="{{ url_for('static', filename='images/profile-picture.png') }}" alt="">
+        <h1>User: {{ username}} </h1>
+        <!-- get count for friends and posts -->
+        <ul class="user-stats">
+          <li>Posts: 0</li>
+          <li>Friends: 0</li>
+        </ul>
+        <!-- Don't show if friend-request was already sent -->
+        {% if (not is_owner) and (not is_friends) %}
+          {% if request_status == 'pending' %}
+            <form action="{{ url_for('friends_bp.delete_friend_request') }}" method="POST">
+              <input type="hidden" name="username" value="{{ username }}">
+              <input type="submit" class="button-add-friend" value="Cancel Request">
+            </form>
+          {% elif request_status == 'incoming' %}
+            <form action="{{ url_for('friends_bp.create_friend_request') }}" method="POST">
+              <input type="hidden" name="username" value="{{ username }}">
+              <input type="submit" class="button-add-friend" value="Accept Request">
+            </form>
+          {% else %}
+            <form action="{{ url_for('friends_bp.create_friend_request') }}" method="POST">
+              <input type="hidden" name="username" value="{{ username }}">
+            </form>
+          {% endif %}
+        {% endif %}
+    </div>
+<!-- post -->
+    <div class="card-flex">
+        <a href="{{ url_for('users_bp.view_profile', username=username) }}"><img src="{{ url_for('static', filename='images/back-button.png')}}" id="for-back-button"></a>
+        <div class="card">
+            <div class="card-outter">
+                <img src="{{ url_for('static', filename='images/profile-picture.png') }}" width=75% height="40%">
+                    <p  class="post-date">{{ post.created_on }}</p>
+                    <div class="text-box">
+                        <p class="box-msg">{{ post.message }}</p>
+                        <div class="edit-delete-btn">
+                            <div class="for-btn">
+                                <p><a href="{{ url_for('users_bp.edit_post', username=username, post_id=post['_id']) }}">EDIT</a></p>
+                            </div>
+                            <form class="for-btn" method='POST' action='{{ url_for('users_bp.delete_post', username=username, post_id=post['_id']) }}'>
+                                <button class="for-btn" type='submit'>DELETE</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

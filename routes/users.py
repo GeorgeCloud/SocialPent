@@ -51,7 +51,7 @@ def create_post(username):
     post = {
             'user_id'    : ObjectId(current_user['_id']),
             'message'    : request.form['message'],
-            'created_on' : datetime.now()
+            'created_on' : datetime.now().strftime('%B %d, %Y')
     }
 
     db.posts.insert_one(post)
@@ -83,8 +83,9 @@ def update_post(username, post_id):
     }
     db.posts.update_one(
         {'_id': ObjectId(post_id)},
-        {'$set': updated_post})
-    return redirect(url_for('users_bp.view_post', username=username, post_id=post_id, current_user=current_user))
+        {'$set': updated_post}
+    )
+    return redirect(url_for('users_bp.view_post', username=username, post_id=post_id))
 
 @users_bp.route('/<username>/posts/<post_id>/delete', methods=['POST'])
 @login_required
