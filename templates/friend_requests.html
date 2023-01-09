@@ -7,11 +7,15 @@
   <div class="side-by-side">
     <div class="received-section">
       <div class="friends-container">
+        <h2 class="friend-request-receive-header">Friends</h2>
         {% for friend in friends %}
           <div class="indv-friend-container">
-            username: {{ friend['username'] }}
-            name: {{ friend['username'] }}
-            email {{ friend['email'] }}
+            <img id="profile-picture2" src="{{ url_for('static', filename='images/profile-picture.png') }}" alt="">
+            <div id="flex-user-email">
+              <p class="username-email"><b>Username:</b> {{ friend['username'] }}</p>
+              <br>
+              <p class="username-email"><b>Email:</b> {{ friend['email'] }}</p>
+            </div>
           </div>
         {% endfor %}
       </div>
@@ -19,7 +23,7 @@
 
     <div class="sent-section">
       <div class="">
-        <h2>Friend Requests Received</h2>
+        <h2 class="friend-request-receive-header">Friend Requests Received</h2>
         <div class="request-content-container">
           {% for request in requests_received %}
             <form action="/friends/requests/accept" method="POST">
@@ -27,8 +31,8 @@
               <div class="account-request">
                 <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
                 <h2>{{ request[0] }}</h2>
-                <p><b>sent {{ request[1] or 100 }} days ago</b></p>
-                <input type="submit" value="Accept">
+                <p><b>Sent Today</b></p>
+                <input id="style-cancel-btn" type="submit" value="ACCEPT">
               </div>
             </form>
           {% endfor %}
@@ -36,16 +40,16 @@
       </div>
 
       <div class="">
-        <h2>Friend Requests Sent</h2>
+        <h2 class="friend-request-receive-header" id="friend-request-p">Friend Requests Sent</h2>
         <div class="request-content-container">
           {% for request in requests_sent %}
             <form action="/friends/requests/delete" method="POST">
               <input type="hidden" name="username" value="{{request[0]}}">
               <div class="account-request">
                 <img src="{{ url_for('static', filename='images/profile_image.png') }}" alt="Profile Picture">
-                <h2>{{ request[0] }}</h2>
-                <p><b>sent {{ request[1] or 100 }} days ago</b></p>
-                <input type="submit" value="Cancel">
+                <h2>{{ request[0].capitalize() }}</h2>
+                <p><b>Sent Today</b></p>
+                <input id="style-cancel-btn" type="submit" value="CANCEL">
               </div>
             </form>
           {% endfor %}
