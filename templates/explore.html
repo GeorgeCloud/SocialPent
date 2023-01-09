@@ -9,7 +9,8 @@
 
     <div class="events gd-content" style="">
       <h5 id="events-header">Events</h5>
-      <div class="events-overflow">
+
+      <div class="events-overflow mt-5">
         {% for event in events %}
           {% include 'partials/event_card.html' %}
         {% endfor %}
@@ -22,10 +23,10 @@
     </div>
 
     <div class="post gd-content">
-      <div class="to-flex">
-        <h5>Post</h5>
+      <h5>Post</h5>
 
-        <div class="side-by-side center">
+      <div class="side-by-side mt-5">
+        <div class="">
           <div>
             <img class="profile-image-explore" src="{{ url_for('static', filename='/images/profile-picture.png') }}" alt="Dark Road">
           </div>
@@ -35,29 +36,29 @@
             <p>Software Developer</p>
           </div>
         </div>
-      </div>
 
-      <form action="{{ url_for('users_bp.create_post', username=current_user['username']) }}" method="POST" class="center">
-        <label>Create post</label>
-        <!-- <label for="message"></label> -->
-        <div class="for-border-top">
-          <textarea name="message" placeholder="What are you thinking about?" cols="30" rows="5" autofocus required></textarea>
-        </div>
-        <div class="image-upload">
-          <label for="file-input">
-            <img src="{{ url_for('static', filename='/images/upload-icon.png') }}" width="200px">
+        <form action="{{ url_for('users_bp.create_post', username=current_user['username']) }}" method="POST" class="post-form">
+          <label>Create post</label>
+
+          <div class="for-border-top">
+            <textarea name="message" placeholder="What are you thinking about?" cols="30" rows="5" autofocus required></textarea>
+          </div>
+
+          <label class="upload-image">
+            <input id="file-input" type="file" />
           </label>
 
-          <input id="file-input" type="file" />
-        </div>
-        <br>
-        <input type="submit" class="submit-message" value="Post">
-      </form>
+          <br>
+          <input type="submit" class="submit-message" value="Post">
+        </form>
+      </div>
     </div>
 
     <div class="activity gd-content">
       <h5>Trending</h5>
-      <p>#movies #sounds #color #youtube #apple #h&m</p>
+      <div class="content mt-5">
+        <p>#movies #sounds #color #youtube #apple #h&m</p>
+      </div>
     </div>
   </div>
 

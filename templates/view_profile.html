@@ -7,10 +7,13 @@
 {% block body %}
   <div class="side-by-side">
     <div class="w35 padding-20">
-      <img id="profile-picture" src="{{ url_for('static', filename='images/profile-picture.png') }}" alt="">
-      <h1>User: {{ user['username'] }}</h1>
+      <div class="center">
+        <img id="profile-picture" src="{{ url_for('static', filename='images/profile-picture.png') }}" alt="">
+        <h1>{{ user['username'] }}</h1>
+      </div>
+
       <!-- get count for friends and posts -->
-      <ul class="user-stats">
+      <ul class="">
         <li>Posts: 0</li>
         <li>Friends: 0</li>
       </ul>
@@ -34,7 +37,7 @@
         {% endif %}
       {% endif %}
     </div>
-  
+
     <div class="flex-posts">
       <div class="posts">
         {% for post in posts %}
