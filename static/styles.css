@@ -448,10 +448,6 @@ hr {
 .image-upload label {
     padding: 0;
 }
-/* 
-li {
-    text-decoration:;
-} */
 
 .left-content {
     display: flex;
@@ -567,9 +563,6 @@ ul {
     /*height: 95vh;*/
     background-color: lightgoldenrodyellow;
 }
-<<<<<<< HEAD
-=======
-
 
 .alert {
     margin-top: 1vh;
@@ -580,52 +573,6 @@ ul {
     border-radius: 5px;
 }
 
-/* .center-absolute {
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-} */
-
-/* .close-button {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.close-button:hover {
-    color: black;
-} */
-
-/* #map {
-  height: 95%;
-} */
-
-/* #profile-picture {
-    margin-top: 20px;
-    height: 20vh;
-    width: 20vw;
-} */
-/* 
-.padding-20 {
-    padding: 20px;
-} */
-/* 
-.posts {
-    display: flex;
-    flex-direction: row;
-    max-width: 60vw;
-    min-width: 60vw;
-    padding: 20px;
-} */
-
 .flex-posts {
     display: flex;
     align-items: center;
@@ -635,14 +582,6 @@ ul {
     overflow: scroll;
     /* overflow: scroll; */
 }
-
-/* .posts {
-    display: grid;
-    gap: 2.5em;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding-top: 50px;
-    padding-bottom: 20px;
-} */
 
 .for-sizing {
     width: 100%;
@@ -727,7 +666,6 @@ ul {
     font-size: 15px;
 }
 
-
 .edit-delete-btn button {
     background-color: rgb(154, 176, 205);
     border: none;
@@ -755,7 +693,6 @@ ul {
     justify-content: center;
 }
 
-
 #header-and-btn {
     display: flex;
     align-items: center;
@@ -768,4 +705,3 @@ ul {
 #resizing-div {
     width: 42%;
 }
->>>>>>> 6653f71 (add: css for view & edit single post)
